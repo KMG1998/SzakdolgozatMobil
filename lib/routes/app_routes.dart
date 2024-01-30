@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/registration_passenger_screen/registration_passenger_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/auth/registration_passenger_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/auth/login_screen.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/driver_dashboard_screen/driver_dashboard_screen.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/new_reserve_car_select_screen/new_reserve_car_select_screen.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/registration_precond_screen/registration_precond_screen.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/new_reserve_wait_screen/new_reserve_wait_screen.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/app_navigation_screen/app_navigation_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/driver/driver_dashboard_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/passenger/new_reserve_car_select_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/auth/registration_precond_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/passenger//new_reserve_wait_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/passenger/passenger_dashboard_page.dart';
 
 class AppRoutes {
   static const String registrationPassengerScreen =
@@ -28,12 +28,12 @@ class AppRoutes {
   static const String appNavigationScreen = '/app_navigation_screen';
 
   static Map<String, WidgetBuilder> routes = {
-    registrationPassengerScreen: (context) => RegistrationPassengerScreen(),
-    loginScreen: (context) => LoginScreen(),
+    registrationPassengerScreen: (context) => const RegistrationPassengerScreen(),
+    loginScreen: (context) => const LoginScreen(),
     driverDashboardScreen: (context) => DriverDashboardScreen(),
     newReserveCarSelectScreen: (context) => NewReserveCarSelectScreen(),
-    registrationPrecondScreen: (context) => RegistrationPrecondScreen(),
+    registrationPrecondScreen: (context) => const RegistrationPrecondScreen(),
     newReserveWaitScreen: (context) => NewReserveWaitScreen(),
-    appNavigationScreen: (context) => AppNavigationScreen()
+    passengerDashboardPage: (context) => const PassengerDashboardPage(),
   };
 }

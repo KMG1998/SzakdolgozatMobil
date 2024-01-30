@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
+
+import '../../generated/assets.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController usernameInputController = TextEditingController();
+  TextEditingController eamilInputController = TextEditingController();
 
   TextEditingController passwordInputController = TextEditingController();
 
@@ -26,8 +31,8 @@ class _LoginScreenState extends State<LoginScreen> {
           height: SizeUtils.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
+              begin: const Alignment(0.5, 0),
+              end: const Alignment(0.5, 1),
               colors: [
                 theme.colorScheme.primaryContainer,
                 appTheme.blue100,
@@ -47,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         children: [
                           CustomImageView(
-                            imagePath: ImageConstant.imgMagantaxiLogo1,
+                            imagePath: Assets.imagesImgMagantaxiLogo1,
                             height: 319.adaptSize,
                             width: 319.adaptSize,
                           ),
@@ -59,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 7.v),
                           CustomTextFormField(
                             width: 351.h,
-                            controller: usernameInputController,
+                            controller: eamilInputController,
                           ),
                           SizedBox(height: 31.v),
                           Text(
@@ -79,6 +84,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             text: "Belépés",
                             buttonStyle: CustomButtonStyles.outlineBlack,
                             buttonTextStyle: theme.textTheme.bodyMedium!,
+                            onPressed: () async {
+                              User user = await UserService().logUserIn(eamilInputController.text, passwordInputController.text);
+                              if(user.typeId == 5) {
+                                Navigator.pushNamed(
+                                    context, AppRoutes.passengerDashboardPage);
+                              }else{
+                                Navigator.pushNamed(
+                                    context, AppRoutes.driverDashboardScreen);
+                              }
+                            },
                           ),
                           SizedBox(height: 52.v),
                           Text(
@@ -88,9 +103,16 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           SizedBox(height: 56.v),
-                          Text(
-                            "Regisztráció",
-                            style: theme.textTheme.bodyMedium,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                  AppRoutes.registrationPrecondScreen);
+                            },
+                            child: Text(
+                              "Regisztráció",
+                              style: theme.textTheme.bodyMedium,
+                            ),
                           ),
                         ],
                       ),

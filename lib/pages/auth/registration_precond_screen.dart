@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/auth/registration_passenger_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 
 class RegistrationPrecondScreen extends StatelessWidget {
-  const RegistrationPrecondScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const RegistrationPrecondScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +17,8 @@ class RegistrationPrecondScreen extends StatelessWidget {
           height: SizeUtils.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              begin: Alignment(0.5, 0),
-              end: Alignment(0.5, 1),
+              begin: const Alignment(0.5, 0),
+              end: const Alignment(0.5, 1),
               colors: [
                 theme.colorScheme.primaryContainer,
                 appTheme.blue100,
@@ -32,11 +30,9 @@ class RegistrationPrecondScreen extends StatelessWidget {
             width: double.maxFinite,
             child: Column(
               children: [
-                SizedBox(height: 252.v),
+                SizedBox(height: 200.v),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: _buildRegistrationButtons(context),
-                  ),
+                  child: _buildRegistrationButtons(context),
                 ),
               ],
             ),
@@ -68,6 +64,10 @@ class RegistrationPrecondScreen extends StatelessWidget {
           SizedBox(height: 8.v),
           CustomOutlinedButton(
             text: "utas regisztráció",
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RegistrationPassengerScreen())),
           ),
           SizedBox(height: 73.v),
           CustomOutlinedButton(
