@@ -24,6 +24,7 @@ class Assets {
   static const String imagesImgVector = 'lib/assets/images/img_vector.svg';
   static const String imagesNewFuvarButton = 'lib/assets/images/new_fuvar_button.png';
   static const String libMain = 'lib/main.dart';
+  static const String modelsOrder = 'lib/models/Order.dart';
   static const String modelsUser = 'lib/models/User.dart';
   static const String passengerNewReserveCarSelectScreen = 'lib/pages/passenger/new_reserve_car_select_screen.dart';
   static const String passengerNewReserveWaitScreen = 'lib/pages/passenger/new_reserve_wait_screen.dart';
@@ -33,7 +34,9 @@ class Assets {
   static const String popupsReserveAcceptedPopupDialog = 'lib/core/popups/reserve_accepted_popup_dialog.dart';
   static const String popupsReserveRejectedPopupDialog = 'lib/core/popups/reserve_rejected_popup_dialog.dart';
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
+  static const String servicesOrderService = 'lib/services/orderService.dart';
   static const String servicesUserService = 'lib/services/userService.dart';
+  static const String servicesVehicleToUserService = 'lib/services/vehicleToUserService.dart';
   static const String themeAppDecoration = 'lib/theme/app_decoration.dart';
   static const String themeCustomButtonStyle = 'lib/theme/custom_button_style.dart';
   static const String themeCustomTextStyle = 'lib/theme/custom_text_style.dart';

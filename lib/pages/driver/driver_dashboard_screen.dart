@@ -3,7 +3,7 @@ import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_bottom_bar.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 
-import '../../core/utils/image_constant.dart';
+import '../../generated/assets.dart';
 
 class DriverDashboardScreen extends StatelessWidget {
   DriverDashboardScreen({Key? key})
@@ -52,7 +52,7 @@ class DriverDashboardScreen extends StatelessWidget {
                           _buildDataSection(context),
                           SizedBox(height: 22.v),
                           CustomImageView(
-                            imagePath: ImageConstant.imgImage2,
+                            imagePath: Assets.imagesImgImage2,
                             height: 652.v,
                             width: 556.h,
                           ),
