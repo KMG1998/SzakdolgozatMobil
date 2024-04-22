@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
@@ -18,6 +19,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
   final OrderService _orderService = OrderService();
   final VehicleToUserService _vehicleToUserService = VehicleToUserService();
   Order? currentOrder;
+
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +92,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
             ),
             child: GestureDetector(
               onTap: () async {
-                String randomDriverId = await _userService.getRandomDriver();
+                String randomDriverId = (await _userService.getDriver(46.25002012408016, 20.14643973265109)).UUID;
                 debugPrint(randomDriverId);
                 String vehicleId = await _vehicleToUserService
                     .getVehicleByDriver(randomDriverId);

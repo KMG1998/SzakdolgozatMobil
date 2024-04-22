@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/DriverLocation.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
 
 class UserService {
@@ -56,16 +59,20 @@ class UserService {
     return currentUser!;
   }
 
-  Future<String> getRandomDriver() async {
-    var resp = await dio.get('/randomDriver',
+  Future<DriverLocation> getDriver(double lat, double longit) async {
+    var resp = await dio.get('/getDriver',
+        data: {
+          'lat':lat,
+          'long':longit,
+        },
         options: Options(responseType: ResponseType.json, headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
           'accept': 'application/json'
         }));
     debugPrint(resp.data.toString());
-    User randomDriver = User.fromJson(resp.data as Map<String, dynamic>);
-    return randomDriver.id;
+    DriverLocation randomDriver = DriverLocation.fromJson(resp.data as Map<String, dynamic>);
+    return randomDriver;
   }
 
 

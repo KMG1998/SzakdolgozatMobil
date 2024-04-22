@@ -24,6 +24,7 @@ class Assets {
   static const String imagesImgVector = 'lib/assets/images/img_vector.svg';
   static const String imagesNewFuvarButton = 'lib/assets/images/new_fuvar_button.png';
   static const String libMain = 'lib/main.dart';
+  static const String modelsDriverLocation = 'lib/models/DriverLocation.dart';
   static const String modelsOrder = 'lib/models/Order.dart';
   static const String modelsUser = 'lib/models/User.dart';
   static const String passengerNewReserveCarSelectScreen = 'lib/pages/passenger/new_reserve_car_select_screen.dart';
