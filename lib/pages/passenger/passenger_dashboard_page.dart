@@ -1,11 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/vehicleToUserService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
 
 class PassengerDashboardPage extends StatefulWidget {
   const PassengerDashboardPage({super.key});
@@ -15,11 +15,10 @@ class PassengerDashboardPage extends StatefulWidget {
 }
 
 class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
-  final UserService _userService = UserService();
-  final OrderService _orderService = OrderService();
-  final VehicleToUserService _vehicleToUserService = VehicleToUserService();
-  Order? currentOrder;
-
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,28 +44,35 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
           child: Container(
             width: double.maxFinite,
             padding: EdgeInsets.symmetric(vertical: 1.v),
-            decoration:
-                AppDecoration.gradientPrimaryContainerToOnSecondaryContainer,
+            decoration: AppDecoration.gradientPrimaryContainerToOnSecondaryContainer,
             child: Column(
               children: [
                 SizedBox(height: 272.v),
                 Expanded(
                   child: SingleChildScrollView(
-                    child: Builder(builder: (context) {
-                      if (currentOrder != null) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 5.v),
-                          child: Column(
-                            children: [
-                              Text("indulási cím:${currentOrder!.startAddress}",style:theme.textTheme.bodyLarge,),
-                              Text("érkezési cím:${currentOrder!.destinationAddress}",style: theme.textTheme.bodyLarge,),
-                            ],
-                          ),
-                        );
-                      } else {
-                        return _buildPassengerDashboard(context);
-                      }
-                    }),
+                    child: BlocBuilder<OrderCubit, OrderState>(
+                      builder: (context, state) {
+                        if (state.currentOrder != null) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 5.v),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "indulási cím:${state.currentOrder!.startAddress}",
+                                  style: theme.textTheme.bodyLarge,
+                                ),
+                                Text(
+                                  "érkezési cím:${state.currentOrder!.destinationAddress}",
+                                  style: theme.textTheme.bodyLarge,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return _buildPassengerDashboard(context);
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -83,25 +89,18 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
       padding: EdgeInsets.only(bottom: 5.v),
       child: Column(
         children: [
-          Container(
-            height: 168.adaptSize,
-            width: 168.adaptSize,
-            padding: EdgeInsets.all(29.h),
-            decoration: AppDecoration.outlineBlack900.copyWith(
-              borderRadius: BorderRadiusStyle.circleBorder84,
-            ),
-            child: GestureDetector(
-              onTap: () async {
-                String randomDriverId = (await _userService.getDriver(46.25002012408016, 20.14643973265109)).UUID;
-                debugPrint(randomDriverId);
-                String vehicleId = await _vehicleToUserService
-                    .getVehicleByDriver(randomDriverId);
-                Order resp = await _orderService.createOrder(
-                    _userService.currentUser!.id, randomDriverId, vehicleId);
-                setState(() {
-                  currentOrder=resp;
-                });
-              },
+          GestureDetector(
+            onTap: () {
+              debugPrint("OnTap");
+              context.read<OrderCubit>().createOrder();
+            },
+            child: Container(
+              height: 168.adaptSize,
+              width: 168.adaptSize,
+              padding: EdgeInsets.all(29.h),
+              decoration: AppDecoration.outlineBlack900.copyWith(
+                borderRadius: BorderRadiusStyle.circleBorder84,
+              ),
               child: CustomImageView(
                 imagePath: Assets.imagesNewFuvarButton,
                 height: 108.adaptSize,

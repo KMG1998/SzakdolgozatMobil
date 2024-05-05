@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
-    Key? key,
+  const CustomTextFormField({
+    super.key,
     this.alignment,
     this.width,
     this.scrollPadding,
@@ -26,9 +26,10 @@ class CustomTextFormField extends StatelessWidget {
     this.fillColor,
     this.filled = true,
     this.validator,
-  }) : super(
-          key: key,
-        );
+    this.autoCorrect = true,
+    this.enableSuggestions = true,
+    this.autovalidateMode,
+  });
 
   final Alignment? alignment;
 
@@ -74,6 +75,13 @@ class CustomTextFormField extends StatelessWidget {
 
   final FormFieldValidator<String>? validator;
 
+  final bool? autoCorrect;
+
+  final bool? enableSuggestions;
+
+  final AutovalidateMode? autovalidateMode;
+
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
@@ -99,6 +107,9 @@ class CustomTextFormField extends StatelessWidget {
           maxLines: maxLines ?? 1,
           decoration: decoration,
           validator: validator,
+          autocorrect: autoCorrect!,
+          enableSuggestions: enableSuggestions!,
+          autovalidateMode: autovalidateMode,
         ),
       );
   InputDecoration get decoration => InputDecoration(

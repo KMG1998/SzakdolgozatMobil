@@ -24,9 +24,13 @@ class Assets {
   static const String imagesImgVector = 'lib/assets/images/img_vector.svg';
   static const String imagesNewFuvarButton = 'lib/assets/images/new_fuvar_button.png';
   static const String libMain = 'lib/main.dart';
+  static const String loginLoginCubit = 'lib/qubit/login/login_cubit.dart';
+  static const String loginLoginState = 'lib/qubit/login/login_state.dart';
   static const String modelsDriverLocation = 'lib/models/DriverLocation.dart';
   static const String modelsOrder = 'lib/models/Order.dart';
   static const String modelsUser = 'lib/models/User.dart';
+  static const String orderOrderCubit = 'lib/qubit/order/order_cubit.dart';
+  static const String orderOrderState = 'lib/qubit/order/order_state.dart';
   static const String passengerNewReserveCarSelectScreen = 'lib/pages/passenger/new_reserve_car_select_screen.dart';
   static const String passengerNewReserveWaitScreen = 'lib/pages/passenger/new_reserve_wait_screen.dart';
   static const String passengerPassengerDashboardPage = 'lib/pages/passenger/passenger_dashboard_page.dart';
@@ -44,7 +48,9 @@ class Assets {
   static const String themeThemeHelper = 'lib/theme/theme_helper.dart';
   static const String utilsDateTimeUtils = 'lib/core/utils/date_time_utils.dart';
   static const String utilsImageConstant = 'lib/core/utils/image_constant.dart';
+  static const String utilsServiceLocator = 'lib/core/utils/service_locator.dart';
   static const String utilsSizeUtils = 'lib/core/utils/size_utils.dart';
+  static const String utilsValidators = 'lib/core/utils/validators.dart';
   static const String widgetsBaseButton = 'lib/widgets/base_button.dart';
   static const String widgetsCustomBottomBar = 'lib/widgets/custom_bottom_bar.dart';
   static const String widgetsCustomIconButton = 'lib/widgets/custom_icon_button.dart';

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/auth/login_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/login/login_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 
+import 'core/utils/service_locator.dart';
 import 'core/utils/size_utils.dart';
 
 
@@ -14,6 +19,7 @@ void main() {
     DeviceOrientation.portraitUp,
   ]);
   ThemeHelper().changeTheme('primary');
+  initServiceLocator();
   runApp(const MyApp());
 }
 
@@ -25,12 +31,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(
       builder: (context, orientation, deviceType) {
-        return MaterialApp(
-          theme: theme,
-          title: 'mt_s_application2',
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRoutes.loginScreen,
-          routes: AppRoutes.routes,
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => LoginCubit(),
+            ),
+            BlocProvider(
+              create: (context) => OrderCubit(),
+            ),
+          ],
+          child: MaterialApp(
+            theme: theme,
+            title: 'mt_s_application2',
+            debugShowCheckedModeBanner: false,
+            home: const LoginScreen(),
+            routes: AppRoutes.routes,
+          ),
         );
       },
     );

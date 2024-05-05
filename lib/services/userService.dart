@@ -55,8 +55,8 @@ class UserService {
           'Content-Type': 'application/json',
           'accept': 'application/json'
         }));
-    currentUser = User.fromJson(resp.data as Map<String, dynamic>);
-    return currentUser!;
+      currentUser = User.fromJson(resp.data as Map<String, dynamic>);
+      return currentUser!;
   }
 
   Future<DriverLocation> getDriver(double lat, double longit) async {

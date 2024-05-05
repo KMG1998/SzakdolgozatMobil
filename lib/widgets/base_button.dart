@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 
 class BaseButton extends StatelessWidget {
-  BaseButton({
-    Key? key,
+  const BaseButton({
+    super.key,
     required this.text,
     this.onPressed,
     this.buttonStyle,
@@ -13,9 +13,7 @@ class BaseButton extends StatelessWidget {
     this.width,
     this.margin,
     this.alignment,
-  }) : super(
-          key: key,
-        );
+  });
 
   final String text;
 
