@@ -6,10 +6,7 @@ import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart
 
 
 class NewReservePopupDialog extends StatelessWidget {
-  NewReservePopupDialog({Key? key})
-      : super(
-          key: key,
-        );
+  NewReservePopupDialog({super.key});
 
   TextEditingController bookingDetailsController = TextEditingController();
 

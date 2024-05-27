@@ -2,10 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/user/user_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';
 
 class PassengerDashboardPage extends StatefulWidget {
   const PassengerDashboardPage({super.key});
@@ -52,19 +56,22 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                   child: SingleChildScrollView(
                     child: BlocBuilder<OrderCubit, OrderState>(
                       builder: (context, state) {
-                        if (state.currentOrder != null) {
+                        if (state.currentRoute != null) {
                           return Padding(
-                            padding: EdgeInsets.only(bottom: 5.v),
+                            padding: EdgeInsets.only(bottom: 5.v,top: 5.h),
                             child: Column(
                               children: [
                                 Text(
-                                  "indulási cím:${state.currentOrder!.startAddress}",
+                                  /*"indulási cím:${state.currentOrder!.startAddress}"*/
+                                  'ind',
                                   style: theme.textTheme.bodyLarge,
                                 ),
                                 Text(
-                                  "érkezési cím:${state.currentOrder!.destinationAddress}",
+                                  /*"érkezési cím:${state.currentOrder!.destinationAddress}"*/
+                                  "cel",
                                   style: theme.textTheme.bodyLarge,
                                 ),
+                                MapWidget(initialPos: state.currentPassengerPos!),
                               ],
                             ),
                           );
@@ -90,9 +97,11 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
       child: Column(
         children: [
           GestureDetector(
-            onTap: () {
-              debugPrint("OnTap");
-              context.read<OrderCubit>().createOrder();
+            onTap: () async {
+              _requestLocationPermission();
+              if (await Permission.location.isGranted) {
+                _getOffer(context);
+              }
             },
             child: Container(
               height: 168.adaptSize,
@@ -117,5 +126,16 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
         ],
       ),
     );
+  }
+
+  void _requestLocationPermission() async {
+    const permission = Permission.location;
+    if (await permission.isDenied) {
+      await permission.request();
+    }
+  }
+
+  void _getOffer(BuildContext context) {
+    context.read<OrderCubit>().createOrder();
   }
 }

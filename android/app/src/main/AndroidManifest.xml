@@ -8,6 +8,8 @@
         android:label="szakdolgozat_magantaxi_mobil"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyAqSuEn0aAlAx37yRyafg6WF_xNOOwUI38"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

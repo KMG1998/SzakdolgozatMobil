@@ -46,6 +46,8 @@ class Assets {
   static const String themeCustomButtonStyle = 'lib/theme/custom_button_style.dart';
   static const String themeCustomTextStyle = 'lib/theme/custom_text_style.dart';
   static const String themeThemeHelper = 'lib/theme/theme_helper.dart';
+  static const String userUserCubit = 'lib/qubit/user/user_cubit.dart';
+  static const String userUserState = 'lib/qubit/user/user_state.dart';
   static const String utilsDateTimeUtils = 'lib/core/utils/date_time_utils.dart';
   static const String utilsImageConstant = 'lib/core/utils/image_constant.dart';
   static const String utilsServiceLocator = 'lib/core/utils/service_locator.dart';
@@ -58,5 +60,6 @@ class Assets {
   static const String widgetsCustomOutlinedButton = 'lib/widgets/custom_outlined_button.dart';
   static const String widgetsCustomRadioButton = 'lib/widgets/custom_radio_button.dart';
   static const String widgetsCustomTextFormField = 'lib/widgets/custom_text_form_field.dart';
+  static const String widgetsMapWidget = 'lib/widgets/map_widget.dart';
 
 }

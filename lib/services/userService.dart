@@ -2,7 +2,6 @@ import 'dart:ffi';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/DriverLocation.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
 
 class UserService {
@@ -12,16 +11,7 @@ class UserService {
       receiveTimeout: const Duration(seconds: 3)));
   User? currentUser;
 
-  static final UserService _singleton = UserService._internal();
-
-  factory UserService() {
-    return _singleton;
-  }
-
-  UserService._internal();
-
-  Future<User> getUser(
-      String uid) async {
+  Future<User> getUser(String uid) async {
     var resp = await dio.get('',
         data: {'userId': uid},
         options: Options(responseType: ResponseType.json, headers: {
@@ -32,8 +22,7 @@ class UserService {
     return User.fromJson(resp.data as Map<String, dynamic>);
   }
 
-  Future<User> createPassenger(
-      String email, String password, String name) async {
+  Future<User> createPassenger(String email, String password, String name) async {
     var resp = await dio.post('/create',
         data: {'email': email, 'password': password, 'name': name, 'type': '5'},
         options: Options(responseType: ResponseType.json, headers: {
@@ -55,25 +44,27 @@ class UserService {
           'Content-Type': 'application/json',
           'accept': 'application/json'
         }));
-      currentUser = User.fromJson(resp.data as Map<String, dynamic>);
-      return currentUser!;
+    currentUser = User.fromJson(resp.data as Map<String, dynamic>);
+    return currentUser!;
   }
 
-  Future<DriverLocation> getDriver(double lat, double longit) async {
+  Future<dynamic?> getDriver(
+      {required double passengerLat,
+      required double passengerLongit,
+      required double destLat,
+      required double destLongit}) async {
     var resp = await dio.get('/getDriver',
         data: {
-          'lat':lat,
-          'long':longit,
+          'passengerLat': passengerLat,
+          'passengerLongit': passengerLongit,
+          'destLat': destLat,
+          'destLongit': destLat,
         },
         options: Options(responseType: ResponseType.json, headers: {
           'Access-Control-Allow-Origin': '*',
           'Content-Type': 'application/json',
           'accept': 'application/json'
         }));
-    debugPrint(resp.data.toString());
-    DriverLocation randomDriver = DriverLocation.fromJson(resp.data as Map<String, dynamic>);
-    return randomDriver;
+    return resp.data[0];
   }
-
-
 }

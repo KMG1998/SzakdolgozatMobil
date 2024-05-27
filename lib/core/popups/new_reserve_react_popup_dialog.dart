@@ -6,10 +6,7 @@ import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_radio_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 
 class NewReserveReactPopupDialog extends StatelessWidget {
-  NewReserveReactPopupDialog({Key? key})
-      : super(
-          key: key,
-        );
+  NewReserveReactPopupDialog({super.key});
 
   TextEditingController bookingDetailsEditTextController =
       TextEditingController();
