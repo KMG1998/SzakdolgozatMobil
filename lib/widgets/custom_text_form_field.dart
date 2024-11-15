@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/auth/login_screen.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -150,7 +151,6 @@ class CustomTextFormField extends StatelessWidget {
       );
 }
 
-/// Extension on [CustomTextFormField] to facilitate inclusion of all types of border style etc
 extension TextFormFieldStyleHelper on CustomTextFormField {
   static UnderlineInputBorder get underLineBlack => UnderlineInputBorder(
         borderSide: BorderSide(

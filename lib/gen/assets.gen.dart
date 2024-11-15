@@ -90,9 +90,9 @@ class $LibAssetsImagesGen {
   SvgGenImage get imgVector =>
       const SvgGenImage('lib/assets/images/img_vector.svg');
 
-  /// File path: lib/assets/images/new_fuvar_button.png
+  /// File path: lib/assets/images/new_ride_button.png
   AssetGenImage get newFuvarButton =>
-      const AssetGenImage('lib/assets/images/new_fuvar_button.png');
+      const AssetGenImage('lib/assets/images/new_ride_button.png');
 
   /// List of all assets
   List<dynamic> get values => [

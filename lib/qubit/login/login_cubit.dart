@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/widgets.dart';
+import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
 
@@ -17,6 +18,8 @@ class LoginCubit extends Cubit<LoginState> {
 
   final formKey = GlobalKey<FormState>();
 
+  final logger = Logger();
+
   Future<void> login() async {
     if(!formKey.currentState!.validate()){
       return;
@@ -27,13 +30,14 @@ class LoginCubit extends Cubit<LoginState> {
       user: null,
     ));
     try {
-      User userData = await getIt.get<UserService>().logUserIn(emailInputController.text, passwordInputController.text);
+      User? userData = await getIt.get<UserService>().logUserIn(emailInputController.text, passwordInputController.text);
       emit(state.copyWith(
         isLoading: false,
         hasError: false,
         user: userData,
       ));
     } catch (e) {
+      logger.e(e);
       emit(state.copyWith(
         isLoading: false,
         hasError: true,

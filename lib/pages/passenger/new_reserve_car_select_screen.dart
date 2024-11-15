@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
-import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_bottom_bar.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_icon_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 
@@ -76,7 +75,6 @@ class NewReserveCarSelectScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: _buildBottomBar(context),
       ),
     );
   }
@@ -263,10 +261,4 @@ class NewReserveCarSelectScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {},
-    );
-  }
 }

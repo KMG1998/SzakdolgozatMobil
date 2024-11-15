@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           ],
           child: MaterialApp(
             theme: theme,
-            title: 'mt_s_application2',
             debugShowCheckedModeBanner: false,
             home: const LoginScreen(),
             routes: AppRoutes.routes,

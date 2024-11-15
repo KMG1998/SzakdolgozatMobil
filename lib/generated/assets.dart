@@ -16,13 +16,11 @@ class Assets {
   static const String imagesImgClock = 'lib/assets/images/img_clock.svg';
   static const String imagesImgHome = 'lib/assets/images/img_home.svg';
   static const String imagesImgHomeButton = 'lib/assets/images/img_home_button.svg';
-  static const String imagesImgImage1 = 'lib/assets/images/img_image_1.png';
-  static const String imagesImgImage2 = 'lib/assets/images/img_image_2.png';
   static const String imagesImgLock = 'lib/assets/images/img_lock.svg';
   static const String imagesImgMagantaxiLogo1 = 'lib/assets/images/img_magantaxi_logo_1.png';
   static const String imagesImgResponseButtons = 'lib/assets/images/img_response_buttons.svg';
   static const String imagesImgVector = 'lib/assets/images/img_vector.svg';
-  static const String imagesNewFuvarButton = 'lib/assets/images/new_fuvar_button.png';
+  static const String imagesNewRideButton = 'lib/assets/images/new_ride_button.png';
   static const String libMain = 'lib/main.dart';
   static const String loginLoginCubit = 'lib/qubit/login/login_cubit.dart';
   static const String loginLoginState = 'lib/qubit/login/login_state.dart';
@@ -40,6 +38,7 @@ class Assets {
   static const String popupsReserveRejectedPopupDialog = 'lib/core/popups/reserve_rejected_popup_dialog.dart';
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
   static const String servicesOrderService = 'lib/services/orderService.dart';
+  static const String servicesSecureStorage = 'lib/services/secureStorage.dart';
   static const String servicesUserService = 'lib/services/userService.dart';
   static const String servicesVehicleToUserService = 'lib/services/vehicleToUserService.dart';
   static const String themeAppDecoration = 'lib/theme/app_decoration.dart';
@@ -54,7 +53,6 @@ class Assets {
   static const String utilsSizeUtils = 'lib/core/utils/size_utils.dart';
   static const String utilsValidators = 'lib/core/utils/validators.dart';
   static const String widgetsBaseButton = 'lib/widgets/base_button.dart';
-  static const String widgetsCustomBottomBar = 'lib/widgets/custom_bottom_bar.dart';
   static const String widgetsCustomIconButton = 'lib/widgets/custom_icon_button.dart';
   static const String widgetsCustomImageView = 'lib/widgets/custom_image_view.dart';
   static const String widgetsCustomOutlinedButton = 'lib/widgets/custom_outlined_button.dart';

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -58,7 +59,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                       builder: (context, state) {
                         if (state.currentRoute != null) {
                           return Padding(
-                            padding: EdgeInsets.only(bottom: 5.v,top: 5.h),
+                            padding: EdgeInsets.only(bottom: 5.v, top: 5.h),
                             child: Column(
                               children: [
                                 Text(
@@ -86,6 +87,23 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
             ),
           ),
         ),
+        bottomNavigationBar: NavigationBar(
+          destinations: <Widget>[
+            NavigationDestination(
+                icon: SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: SvgPicture.asset(
+                    Assets.imagesImgClock,
+                  ),
+                ),
+                label: ''),
+            NavigationDestination(icon: SvgPicture.asset(Assets.imagesImgHome), label: ''),
+            NavigationDestination(icon: SvgPicture.asset(Assets.imagesImgHome), label: ''),
+          ],
+          indicatorColor: Color(0XFFB2D8FF),
+          indicatorShape: RoundedRectangleBorder(),
+        ),
       ),
     );
   }
@@ -111,7 +129,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                 borderRadius: BorderRadiusStyle.circleBorder84,
               ),
               child: CustomImageView(
-                imagePath: Assets.imagesNewFuvarButton,
+                imagePath: Assets.imagesNewRideButton,
                 height: 108.adaptSize,
                 width: 108.adaptSize,
                 alignment: Alignment.center,

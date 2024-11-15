@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
@@ -12,6 +13,7 @@ part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   OrderCubit() : super(const OrderState(isLoading: false, hasError: false));
+  final _logger = Logger();
 
   createOrder() async {
     emit(state.copyWith(
@@ -25,7 +27,8 @@ class OrderCubit extends Cubit<OrderState> {
         passengerLat: currentPos.latitude,
         passengerLongit: currentPos.longitude,
         destLat: 46.240255191632635,
-        destLongit: 20.142768112026104) as Map<String,dynamic>;
+        destLongit: 20.142768112026104);
+    _logger.d(routeResp);
     var currentRoute = PolylinePoints().decodePolyline(routeResp['overview_polyline']['points']);
     emit(state.copyWith(
       currentOrder: null,

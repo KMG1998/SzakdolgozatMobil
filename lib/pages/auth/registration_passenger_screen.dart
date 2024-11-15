@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
@@ -8,12 +10,10 @@ class RegistrationPassengerScreen extends StatefulWidget {
   const RegistrationPassengerScreen({super.key});
 
   @override
-  State<RegistrationPassengerScreen> createState() =>
-      _RegistrationPassengerScreenState();
+  State<RegistrationPassengerScreen> createState() => _RegistrationPassengerScreenState();
 }
 
-class _RegistrationPassengerScreenState
-    extends State<RegistrationPassengerScreen> {
+class _RegistrationPassengerScreenState extends State<RegistrationPassengerScreen> {
   TextEditingController emailInputController = TextEditingController();
 
   TextEditingController nameInputController = TextEditingController();
@@ -141,10 +141,14 @@ class _RegistrationPassengerScreenState
       buttonTextStyle: theme.textTheme.bodyMedium!,
       onPressed: () async {
         userService
-            .createPassenger(emailInputController.text,
-                passwordInputController.text, nameInputController.text)
-            .then(
-                (value) => Navigator.pushNamed(context, AppRoutes.loginScreen));
+            .createPassenger(emailInputController.text, passwordInputController.text, nameInputController.text)
+            .then((success) {
+          debugPrint('success:$success');
+          if (success == true) {
+            Navigator.pushNamed(context, AppRoutes.loginScreen);
+            return;
+          }
+        });
       },
     );
   }

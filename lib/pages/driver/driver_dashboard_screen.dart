@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
-import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_bottom_bar.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 
 import '../../generated/assets.dart';
@@ -51,11 +50,6 @@ class DriverDashboardScreen extends StatelessWidget {
                         children: [
                           _buildDataSection(context),
                           SizedBox(height: 22.v),
-                          CustomImageView(
-                            imagePath: Assets.imagesImgImage2,
-                            height: 652.v,
-                            width: 556.h,
-                          ),
                         ],
                       ),
                     ),
@@ -65,7 +59,6 @@ class DriverDashboardScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: _buildBottomBar(context),
       ),
     );
   }
@@ -113,13 +106,6 @@ class DriverDashboardScreen extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {},
     );
   }
 }

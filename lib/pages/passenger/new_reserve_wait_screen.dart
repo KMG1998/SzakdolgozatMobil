@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
-import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_bottom_bar.dart';
 
 class NewReserveWaitScreen extends StatelessWidget {
   NewReserveWaitScreen({Key? key})
@@ -64,15 +63,7 @@ class NewReserveWaitScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: _buildBottomBar(context),
       ),
-    );
-  }
-
-  /// Section Widget
-  Widget _buildBottomBar(BuildContext context) {
-    return CustomBottomBar(
-      onChanged: (BottomBarEnum type) {},
     );
   }
 }
