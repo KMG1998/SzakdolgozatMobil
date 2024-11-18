@@ -11,8 +11,6 @@ import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 import 'core/utils/service_locator.dart';
 import 'core/utils/size_utils.dart';
 
-var globalMessengerKey = GlobalKey<ScaffoldMessengerState>();
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
