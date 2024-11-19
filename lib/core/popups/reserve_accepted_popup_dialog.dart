@@ -4,10 +4,7 @@ import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart
 
 
 class ReserveAcceptedPopupDialog extends StatelessWidget {
-  const ReserveAcceptedPopupDialog({Key? key})
-      : super(
-          key: key,
-        );
+  const ReserveAcceptedPopupDialog({super.key});
 
   @override
   Widget build(BuildContext context) {

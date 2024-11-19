@@ -3,10 +3,7 @@ import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
 
 class NewReserveWaitScreen extends StatelessWidget {
-  NewReserveWaitScreen({Key? key})
-      : super(
-          key: key,
-        );
+  NewReserveWaitScreen({super.key});
 
   GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 

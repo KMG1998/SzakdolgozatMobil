@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,8 +17,8 @@ class MapWidget extends StatefulWidget {
 }
 
 class _MapWidgetState extends State<MapWidget> {
-  final Completer<GoogleMapController> _controller =
-  Completer<GoogleMapController>();
+  final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
@@ -40,14 +39,14 @@ class _MapWidgetState extends State<MapWidget> {
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
             },
-            /*polylines: {
+            polylines: {
               Polyline(
                 polylineId: const PolylineId('direction_polyline'),
                 color: Theme.of(context).colorScheme.primary,
                 width: 5,
                 points: state.currentRoute!.map((e) => LatLng(e.latitude, e.longitude)).toList(),
               )
-            },*/
+            },
           ),
         );
       },

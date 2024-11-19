@@ -62,22 +62,4 @@ class UserService {
     currentUser = User.fromJson(resp.data as Map<String, dynamic>);
     return currentUser!;
   }
-
-  Future<dynamic> getDriver(
-      {required double passengerLat,
-      required double passengerLongit,
-      required double destLat,
-      required double destLongit}) async {
-    var resp = await _dio.get(
-      '/getDriver',
-      data: {
-        'passengerLat': passengerLat,
-        'passengerLongit': passengerLongit,
-        'destLat': destLat,
-        'destLongit': destLat,
-      },
-    );
-    _logger.d(resp.data);
-    return resp.data[0];
-  }
 }

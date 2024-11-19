@@ -19,7 +19,7 @@ class CustomImageView extends StatelessWidget {
   BorderRadius? radius;
   BoxBorder? border;
 
-  CustomImageView({
+  CustomImageView({super.key, 
     this.imagePath,
     this.height,
     this.width,

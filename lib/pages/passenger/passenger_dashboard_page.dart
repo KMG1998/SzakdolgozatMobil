@@ -1,15 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
-import 'package:szakdolgozat_magantaxi_mobil/qubit/user/user_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';
 
 class PassengerDashboardPage extends StatefulWidget {
@@ -20,6 +20,8 @@ class PassengerDashboardPage extends StatefulWidget {
 }
 
 class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
+  var destinationLocation;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +59,15 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                   child: SingleChildScrollView(
                     child: BlocBuilder<OrderCubit, OrderState>(
                       builder: (context, state) {
+                        if (state.isLoading) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child: LoadingIndicator(indicatorType: Indicator.ballClipRotatePulse),
+                            ),
+                          );
+                        }
                         if (state.currentRoute != null) {
                           return Padding(
                             padding: EdgeInsets.only(bottom: 5.v, top: 5.h),
@@ -114,11 +125,28 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
       padding: EdgeInsets.only(bottom: 5.v),
       child: Column(
         children: [
+          CustomOutlinedButton(
+            height: 28,
+            width: 400.v,
+            text: "érkezési cím kiválasztása",
+            buttonStyle: CustomButtonStyles.outlineBlack,
+            buttonTextStyle: theme.textTheme.bodyLarge!,
+            onPressed: () async {
+              final currentPos = await Geolocator.getCurrentPosition();
+              showDialog(
+                  context: context,
+                  builder: (context) => PlacePicker(
+                        apiKey: 'AIzaSyAqSuEn0aAlAx37yRyafg6WF_xNOOwUI38',
+                        initialPosition: LatLng(currentPos.latitude, currentPos.longitude),
+                      ));
+            },
+          ),
+          SizedBox(height: 20),
           GestureDetector(
             onTap: () async {
               _requestLocationPermission();
               if (await Permission.location.isGranted) {
-                _getOffer(context);
+                context.read<OrderCubit>().getOffer();
               }
             },
             child: Container(
@@ -151,9 +179,5 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
     if (await permission.isDenied) {
       await permission.request();
     }
-  }
-
-  void _getOffer(BuildContext context) {
-    context.read<OrderCubit>().createOrder();
   }
 }

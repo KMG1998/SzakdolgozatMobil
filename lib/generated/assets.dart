@@ -4,9 +4,7 @@ class Assets {
 
   static const String authLoginScreen = 'lib/pages/auth/login_screen.dart';
   static const String authRegistrationPassengerScreen = 'lib/pages/auth/registration_passenger_screen.dart';
-  static const String authRegistrationPrecondScreen = 'lib/pages/auth/registration_precond_screen.dart';
   static const String coreAppExport = 'lib/core/app_export.dart';
-  static const String driverDriverDashboardScreen = 'lib/pages/driver/driver_dashboard_screen.dart';
   static const String fontsJetBrainsMonoRomanRegular = 'lib/assets/fonts/JetBrainsMonoRomanRegular.ttf';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String imagesImageNotFound = 'lib/assets/images/image_not_found.png';

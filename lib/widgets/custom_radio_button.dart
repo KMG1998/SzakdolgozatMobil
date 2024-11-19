@@ -3,7 +3,7 @@ import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 
 class CustomRadioButton extends StatelessWidget {
   CustomRadioButton({
-    Key? key,
+    super.key,
     required this.onChange,
     this.decoration,
     this.alignment,
@@ -18,9 +18,7 @@ class CustomRadioButton extends StatelessWidget {
     this.textAlignment,
     this.gradient,
     this.backgroundColor,
-  }) : super(
-          key: key,
-        );
+  });
 
   final BoxDecoration? decoration;
 
@@ -78,8 +76,8 @@ class CustomRadioButton extends StatelessWidget {
   Widget get leftSideRadioButton => Row(
         children: [
           Padding(
-            child: radioButtonWidget,
             padding: EdgeInsets.only(right: 8),
+            child: radioButtonWidget,
           ),
           textWidget,
         ],

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -7,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
 
 part 'order_state.dart';
 
@@ -15,29 +13,39 @@ class OrderCubit extends Cubit<OrderState> {
   OrderCubit() : super(const OrderState(isLoading: false, hasError: false));
   final _logger = Logger();
 
+  getOffer() async {
+    try {
+      emit(state.copyWith(
+        currentOrder: null,
+        isLoading: true,
+        hasError: false,
+        errorMessage: null,
+      ));
+      Position currentPos = await Geolocator.getCurrentPosition();
+      var routeResp = await getIt.get<OrderService>().getOffer(
+          passengerLat: currentPos.latitude,
+          passengerLongit: currentPos.longitude,
+          destLat:   46.421727384139864,
+          destLongit: 20.332100135254265);
+      if (routeResp == null) {
+        emit(state.copyWith(isLoading: false, hasError: true, errorMessage: 'NO_AVAILABLE_DRIVER'));
+        return;
+      }
+      var currentRoute = PolylinePoints().decodePolyline(routeResp[0]['overview_polyline']['points']);
+      emit(state.copyWith(
+          currentOrder: null,
+          isLoading: false,
+          hasError: false,
+          errorMessage: null,
+          currentPassengerPos: currentPos,
+          currentRoute: currentRoute));
+    } catch (e) {
+      _logger.e(e);
+      emit(state.copyWith(isLoading: false, hasError: true, errorMessage: 'UNKNOWN ERROR'));
+    }
+  }
+
   createOrder() async {
-    emit(state.copyWith(
-      currentOrder: null,
-      isLoading: true,
-      hasError: false,
-      errorMessage: null,
-    ));
-    Position currentPos = await Geolocator.getCurrentPosition();
-    var routeResp = await getIt.get<UserService>().getDriver(
-        passengerLat: currentPos.latitude,
-        passengerLongit: currentPos.longitude,
-        destLat: 46.240255191632635,
-        destLongit: 20.142768112026104);
-    _logger.d(routeResp);
-    var currentRoute = PolylinePoints().decodePolyline(routeResp['overview_polyline']['points']);
-    emit(state.copyWith(
-      currentOrder: null,
-      isLoading: false,
-      hasError: false,
-      errorMessage: null,
-      currentPassengerPos: currentPos,
-      currentRoute: currentRoute
-    ));
     /*String vehicleId = await getIt.get<VehicleToUserService>().getVehicleByDriver(randomDriverId);
     Order newOrder = await getIt
         .get<OrderService>()
