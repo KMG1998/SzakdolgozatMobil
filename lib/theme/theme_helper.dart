@@ -96,7 +96,7 @@ class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
         bodyMedium: TextStyle(
           color: appTheme.black900,
-          fontSize: 14.fSize,
+          fontSize: 16.fSize,
           fontFamily: 'JetBrains Mono',
           fontWeight: FontWeight.w400,
         ),

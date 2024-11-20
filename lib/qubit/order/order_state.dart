@@ -1,31 +1,24 @@
 part of 'order_cubit.dart';
 
 @immutable
-class OrderState {
-  final Order? currentOrder;
-  final Position? currentPassengerPos;
-  final bool isLoading;
-  final bool hasError;
-  final String? errorMessage;
-  final List<PointLatLng>? currentRoute;
+class OrderState {}
 
-  const OrderState({
-    this.currentOrder,
-    required this.isLoading,
-    required this.hasError,
-    this.errorMessage,
-    this.currentRoute,
-    this.currentPassengerPos,
+class OrderInit extends OrderState{}
+
+class OrderLoading extends OrderState {}
+
+class OrderError extends OrderState {
+  final String errorMessage;
+
+  OrderError({required this.errorMessage});
+}
+
+class OrderLoaded extends OrderState {
+  final Position currentPassengerPos;
+  final List<PointLatLng> currentRoute;
+
+  OrderLoaded({
+    required this.currentPassengerPos,
+    required this.currentRoute,
   });
-
-  OrderState copyWith({currentOrder, isLoading, hasError, errorMessage, currentRoute, currentPassengerPos}) {
-    return OrderState(
-      currentOrder: currentOrder ?? this.currentOrder,
-      isLoading: isLoading  ?? this.isLoading,
-      hasError: hasError ?? this.hasError,
-      errorMessage: errorMessage ?? this.errorMessage,
-      currentRoute: currentRoute ?? this.currentRoute,
-      currentPassengerPos: currentPassengerPos ?? this.currentPassengerPos,
-    );
-  }
 }

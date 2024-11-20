@@ -1,4 +1,3 @@
-
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
@@ -52,7 +51,8 @@ class OrderService {
       {required double passengerLat,
       required double passengerLongit,
       required double destLat,
-      required double destLongit}) async {
+      required double destLongit,
+      required int personAmount}) async {
     try {
       final resp = await _dio.post(
         '/getOffer',
@@ -60,12 +60,12 @@ class OrderService {
           'passengerLat': passengerLat,
           'passengerLongit': passengerLongit,
           'destLat': destLat,
-          'destLongit': destLat,
+          'destLongit': destLongit,
         },
       );
       _logger.d(resp.data);
       return (resp.data is List<dynamic>) ? resp.data : null;
-    }catch(e){
+    } catch (e) {
       _logger.e(e);
       return null;
     }

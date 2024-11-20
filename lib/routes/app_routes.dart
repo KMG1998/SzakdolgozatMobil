@@ -27,6 +27,6 @@ class AppRoutes {
     loginScreen: (context) => const LoginScreen(),
     newReserveCarSelectScreen: (context) => NewReserveCarSelectScreen(),
     newReserveWaitScreen: (context) => NewReserveWaitScreen(),
-    passengerDashboardPage: (context) => const PassengerDashboardPage(),
+    passengerDashboardPage: (context) => PassengerDashboardPage(),
   };
 }

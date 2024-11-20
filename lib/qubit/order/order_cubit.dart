@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
@@ -10,38 +11,40 @@ import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
 part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
-  OrderCubit() : super(const OrderState(isLoading: false, hasError: false));
+  OrderCubit() : super(OrderInit());
   final _logger = Logger();
 
-  getOffer() async {
+  getOffer(Location destLoc, int personAmount) async {
     try {
-      emit(state.copyWith(
-        currentOrder: null,
-        isLoading: true,
-        hasError: false,
-        errorMessage: null,
-      ));
+      emit(OrderLoading());
       Position currentPos = await Geolocator.getCurrentPosition();
+      _logger.d('lat ${destLoc.lat}, lng ${destLoc.lng}');
       var routeResp = await getIt.get<OrderService>().getOffer(
           passengerLat: currentPos.latitude,
           passengerLongit: currentPos.longitude,
-          destLat:   46.421727384139864,
-          destLongit: 20.332100135254265);
+          destLat: destLoc.lat,
+          destLongit: destLoc.lng,
+          personAmount: personAmount);
       if (routeResp == null) {
-        emit(state.copyWith(isLoading: false, hasError: true, errorMessage: 'NO_AVAILABLE_DRIVER'));
+        emit(OrderError( errorMessage: 'NO_AVAILABLE_DRIVER'));
         return;
       }
       var currentRoute = PolylinePoints().decodePolyline(routeResp[0]['overview_polyline']['points']);
-      emit(state.copyWith(
-          currentOrder: null,
-          isLoading: false,
-          hasError: false,
-          errorMessage: null,
+      emit(OrderLoaded(
           currentPassengerPos: currentPos,
           currentRoute: currentRoute));
     } catch (e) {
       _logger.e(e);
-      emit(state.copyWith(isLoading: false, hasError: true, errorMessage: 'UNKNOWN ERROR'));
+      emit(OrderError(errorMessage: 'UNKNOWN ERROR'));
+    }
+  }
+
+  finishRide() {
+    try {
+      emit(OrderLoading());
+      emit(OrderInit());
+    }catch(e){
+      _logger.e(e);
     }
   }
 

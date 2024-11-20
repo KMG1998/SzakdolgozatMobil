@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/auth/login_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/login/login_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
@@ -36,11 +39,18 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => UserCubit()),
           ],
           child: MaterialApp(
-            theme: theme,
-            debugShowCheckedModeBanner: false,
-            home: const LoginScreen(),
-            routes: AppRoutes.routes,
-          ),
+              theme: theme,
+              debugShowCheckedModeBanner: false,
+              home: const LoginScreen(),
+              routes: AppRoutes.routes,
+              localizationsDelegates: [
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
+              supportedLocales: [
+                Locale('hu'),
+              ]),
         );
       },
     );
