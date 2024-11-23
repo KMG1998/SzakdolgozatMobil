@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 
@@ -19,11 +20,11 @@ class ReserveAcceptedPopupDialog extends StatelessWidget {
       margin: EdgeInsets.only(
         left: 53.h,
         right: 53.h,
-        bottom: 354.v,
+        bottom: 354.w,
       ),
       padding: EdgeInsets.symmetric(
         horizontal: 24.h,
-        vertical: 30.v,
+        vertical: 30.w,
       ),
       decoration: AppDecoration.fillOnSecondaryContainer.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder20,
@@ -35,7 +36,7 @@ class ReserveAcceptedPopupDialog extends StatelessWidget {
             "foglalás jóváhagyva",
             style: theme.textTheme.headlineSmall,
           ),
-          SizedBox(height: 43.v),
+          SizedBox(height: 43.w),
           Container(
             width: 442.h,
             margin: EdgeInsets.only(
@@ -50,11 +51,11 @@ class ReserveAcceptedPopupDialog extends StatelessWidget {
               style: theme.textTheme.titleLarge,
             ),
           ),
-          SizedBox(height: 85.v),
+          SizedBox(height: 85.w),
           CustomOutlinedButton(
             text: "tovább",
           ),
-          SizedBox(height: 9.v),
+          SizedBox(height: 9.w),
         ],
       ),
     );

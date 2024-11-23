@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
-import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 
 class MapWidget extends StatefulWidget {
   final Position initialPos;
@@ -27,7 +26,7 @@ class _MapWidgetState extends State<MapWidget> {
         return Column(
           children: [
             SizedBox(
-              width: 400.v,
+              width: 400.w,
               height: 800.h,
               child: GoogleMap(
                 mapType: MapType.hybrid,

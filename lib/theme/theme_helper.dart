@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/app_export.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 String _appTheme = "primary";
 
@@ -96,25 +96,25 @@ class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
         bodyMedium: TextStyle(
           color: appTheme.black900,
-          fontSize: 16.fSize,
+          fontSize: 16,
           fontFamily: 'JetBrains Mono',
           fontWeight: FontWeight.w400,
         ),
         headlineLarge: TextStyle(
           color: appTheme.black900,
-          fontSize: 30.fSize,
+          fontSize: 30,
           fontFamily: 'JetBrains Mono',
           fontWeight: FontWeight.w400,
         ),
         headlineSmall: TextStyle(
           color: appTheme.black900,
-          fontSize: 25.fSize,
+          fontSize: 25,
           fontFamily: 'JetBrains Mono',
           fontWeight: FontWeight.w400,
         ),
         titleLarge: TextStyle(
           color: appTheme.black900,
-          fontSize: 20.fSize,
+          fontSize: 20,
           fontFamily: 'JetBrains Mono',
           fontWeight: FontWeight.w400,
         ),

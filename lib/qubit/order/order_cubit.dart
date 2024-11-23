@@ -5,7 +5,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
 
 part 'order_state.dart';
@@ -19,6 +18,7 @@ class OrderCubit extends Cubit<OrderState> {
       emit(OrderLoading());
       Position currentPos = await Geolocator.getCurrentPosition();
       _logger.d('lat ${destLoc.lat}, lng ${destLoc.lng}');
+      _logger.d(personAmount);
       var routeResp = await getIt.get<OrderService>().getOffer(
           passengerLat: currentPos.latitude,
           passengerLongit: currentPos.longitude,

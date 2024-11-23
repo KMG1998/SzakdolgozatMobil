@@ -1,6 +1,9 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
@@ -31,8 +34,8 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         body: Container(
-          width: SizeUtils.width,
-          height: SizeUtils.height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: const Alignment(0.5, 0),
@@ -48,41 +51,41 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
             width: double.maxFinite,
             child: Column(
               children: [
-                SizedBox(height: 111.v),
+                SizedBox(height: 111.w),
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 339.v),
+                      padding: EdgeInsets.only(bottom: 339.w),
                       child: Column(
                         children: [
                           Text(
                             "E-mail",
                             style: theme.textTheme.bodyMedium,
                           ),
-                          SizedBox(height: 7.v),
+                          SizedBox(height: 7.w),
                           _buildEmailInput(context),
-                          SizedBox(height: 31.v),
+                          SizedBox(height: 31.w),
                           Text(
                             "Név",
                             style: theme.textTheme.bodyMedium,
                           ),
-                          SizedBox(height: 7.v),
+                          SizedBox(height: 7.w),
                           _buildNameInput(context),
-                          SizedBox(height: 31.v),
+                          SizedBox(height: 31.w),
                           Text(
                             "Jelszó",
                             style: theme.textTheme.bodyMedium,
                           ),
-                          SizedBox(height: 7.v),
+                          SizedBox(height: 7.w),
                           _buildPasswordInput(context),
-                          SizedBox(height: 34.v),
+                          SizedBox(height: 34.w),
                           Text(
                             "Jelszó ellenőrzés",
                             style: theme.textTheme.bodyMedium,
                           ),
-                          SizedBox(height: 4.v),
+                          SizedBox(height: 4.w),
                           _buildPasswordAgainInput(context),
-                          SizedBox(height: 77.v),
+                          SizedBox(height: 77.w),
                           _buildRegistrationButton(context),
                         ],
                       ),
@@ -133,18 +136,18 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
   /// Section Widget
   Widget _buildRegistrationButton(BuildContext context) {
     return CustomOutlinedButton(
-      height: 28.v,
-      width: 311.h,
+      height: 40.h,
+      width: 311.w,
       text: "Regisztráció",
       buttonStyle: CustomButtonStyles.outlineBlack,
       buttonTextStyle: theme.textTheme.bodyMedium!,
       onPressed: () async {
         userService
             .createPassenger(emailInputController.text, passwordInputController.text, nameInputController.text)
-            .then((success) {
-          debugPrint('success:$success');
-          if (success == true) {
-            Navigator.pushNamed(context, AppRoutes.loginScreen);
+            .then((newUser) {
+          debugPrint('success:$newUser');
+          if () {
+            navigatorKey.currentState?.pushNamed(AppRoutes.loginScreen);
             return;
           }
         });

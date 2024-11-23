@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
-    this.alignment,
     this.width,
     this.scrollPadding,
     this.controller,
     this.focusNode,
-    this.autofocus = true,
+    this.autofocus = false,
     this.textStyle,
     this.obscureText = false,
     this.textInputAction = TextInputAction.next,
@@ -30,8 +30,6 @@ class CustomTextFormField extends StatelessWidget {
     this.enableSuggestions = true,
     this.autovalidateMode,
   });
-
-  final Alignment? alignment;
 
   final double? width;
 
@@ -84,12 +82,7 @@ class CustomTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return alignment != null
-        ? Align(
-            alignment: alignment ?? Alignment.center,
-            child: textFormFieldWidget(context),
-          )
-        : textFormFieldWidget(context);
+    return textFormFieldWidget(context);
   }
 
   Widget textFormFieldWidget(BuildContext context) => SizedBox(
@@ -100,7 +93,7 @@ class CustomTextFormField extends StatelessWidget {
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,
-          style: textStyle ?? theme.textTheme.titleLarge,
+          style: textStyle ?? theme.textTheme.titleMedium,
           obscureText: obscureText!,
           textInputAction: textInputAction,
           keyboardType: textInputType,
@@ -120,7 +113,7 @@ class CustomTextFormField extends StatelessWidget {
         suffixIcon: suffix,
         suffixIconConstraints: suffixConstraints,
         isDense: true,
-        contentPadding: contentPadding ?? EdgeInsets.all(12.h),
+        contentPadding: contentPadding ?? EdgeInsets.symmetric(vertical:5.h, horizontal: 20.w),
         fillColor: fillColor ?? theme.colorScheme.onSecondaryContainer,
         filled: filled,
         border: borderDecoration ??

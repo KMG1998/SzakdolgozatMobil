@@ -2,9 +2,12 @@
 class Assets {
   Assets._();
 
+  static const String authAuthCubit = 'lib/qubit/auth/auth_cubit.dart';
+  static const String authAuthState = 'lib/qubit/auth/auth_state.dart';
   static const String authLoginScreen = 'lib/pages/auth/login_screen.dart';
   static const String authRegistrationPassengerScreen = 'lib/pages/auth/registration_passenger_screen.dart';
   static const String coreAppExport = 'lib/core/app_export.dart';
+  static const String dashboardPassengerDashboardPage = 'lib/pages/dashboard/passenger_dashboard_page.dart';
   static const String fontsJetBrainsMonoRomanRegular = 'lib/assets/fonts/JetBrainsMonoRomanRegular.ttf';
   static const String generatedAssets = 'lib/generated/assets.dart';
   static const String imagesImageNotFound = 'lib/assets/images/image_not_found.png';
@@ -20,18 +23,12 @@ class Assets {
   static const String imagesImgVector = 'lib/assets/images/img_vector.svg';
   static const String imagesNewRideButton = 'lib/assets/images/new_ride_button.png';
   static const String libMain = 'lib/main.dart';
-  static const String loginLoginCubit = 'lib/qubit/login/login_cubit.dart';
-  static const String loginLoginState = 'lib/qubit/login/login_state.dart';
   static const String modelsDriverLocation = 'lib/models/DriverLocation.dart';
   static const String modelsOrder = 'lib/models/Order.dart';
   static const String modelsUser = 'lib/models/User.dart';
   static const String orderOrderCubit = 'lib/qubit/order/order_cubit.dart';
   static const String orderOrderState = 'lib/qubit/order/order_state.dart';
-  static const String passengerNewReserveCarSelectScreen = 'lib/pages/passenger/new_reserve_car_select_screen.dart';
-  static const String passengerNewReserveWaitScreen = 'lib/pages/passenger/new_reserve_wait_screen.dart';
-  static const String passengerPassengerDashboardPage = 'lib/pages/passenger/passenger_dashboard_page.dart';
-  static const String popupsNewReservePopupDialog = 'lib/core/popups/new_reserve_popup_dialog.dart';
-  static const String popupsNewReserveReactPopupDialog = 'lib/core/popups/new_reserve_react_popup_dialog.dart';
+  static const String popupsForgotPasswordDialog = 'lib/core/popups/forgot_password_dialog.dart';
   static const String popupsReserveAcceptedPopupDialog = 'lib/core/popups/reserve_accepted_popup_dialog.dart';
   static const String popupsReserveRejectedPopupDialog = 'lib/core/popups/reserve_rejected_popup_dialog.dart';
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
@@ -48,7 +45,6 @@ class Assets {
   static const String utilsDateTimeUtils = 'lib/core/utils/date_time_utils.dart';
   static const String utilsImageConstant = 'lib/core/utils/image_constant.dart';
   static const String utilsServiceLocator = 'lib/core/utils/service_locator.dart';
-  static const String utilsSizeUtils = 'lib/core/utils/size_utils.dart';
   static const String utilsValidators = 'lib/core/utils/validators.dart';
   static const String widgetsBaseButton = 'lib/widgets/base_button.dart';
   static const String widgetsCustomIconButton = 'lib/widgets/custom_icon_button.dart';

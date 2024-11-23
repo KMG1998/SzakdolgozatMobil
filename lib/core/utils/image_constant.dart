@@ -5,7 +5,7 @@ class ImageConstant {
   // passenger_dashboard images
   static String imgVector = '$imagePath/img_vector.svg';
 
-  // login images
+  // auth images
   static String imgMagantaxiLogo1 = '$imagePath/img_magantaxi_logo_1.png';
 
   // driver_dashboard images

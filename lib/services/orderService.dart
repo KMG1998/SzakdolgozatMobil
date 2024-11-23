@@ -27,26 +27,6 @@ class OrderService {
     }));
   }
 
-  /*Future<Order> createOrder(String passengerId, String driverId, vehicleId) async {
-    var resp = await _dio.post('/create',
-        data: {'customerId': passengerId, 'driverId': driverId, 'vehicleId': vehicleId},
-        options: Options(responseType: ResponseType.json, headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-          'accept': 'application/json'
-        }));
-  }
-
-  Future<Order> getLatestForDriver(String driverId) async {
-    var resp = await _dio.get('/getLatestForDriver',
-        data: {'driverId': driverId},
-        options: Options(responseType: ResponseType.json, headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-          'accept': 'application/json'
-        }));
-  }*/
-
   Future<dynamic> getOffer(
       {required double passengerLat,
       required double passengerLongit,
@@ -61,6 +41,7 @@ class OrderService {
           'passengerLongit': passengerLongit,
           'destLat': destLat,
           'destLongit': destLongit,
+          'personAmount': personAmount,
         },
       );
       _logger.d(resp.data);

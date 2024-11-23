@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -16,10 +13,8 @@ import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';
 
-final _logger = Logger();
-
 class PassengerDashboardPage extends StatefulWidget {
-  PassengerDashboardPage({super.key});
+  const PassengerDashboardPage({super.key});
 
   @override
   State<PassengerDashboardPage> createState() => _PassengerDashboardPageState();
@@ -28,6 +23,7 @@ class PassengerDashboardPage extends StatefulWidget {
 class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
   Location? destinationLocation;
   String? destinationAddress;
+  final _logger = Logger();
   TextEditingController personNumController = TextEditingController();
 
   @override
@@ -44,8 +40,8 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
         body: Container(
-          width: SizeUtils.width,
-          height: SizeUtils.height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -60,7 +56,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
           ),
           child: Container(
             width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 1.v),
+            padding: EdgeInsets.symmetric(vertical: 1.w),
             decoration: AppDecoration.gradientPrimaryContainerToOnSecondaryContainer,
             child: Column(
               children: [
@@ -78,7 +74,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                       }
                       if (state is OrderLoaded) {
                         return Padding(
-                          padding: EdgeInsets.only(bottom: 5.v, top: 5.h),
+                          padding: EdgeInsets.only(bottom: 5.w, top: 5.h),
                           child: Column(
                             children: [
                               MapWidget(initialPos: state.currentPassengerPos),
@@ -104,22 +100,32 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
             ),
           ),
         ),
-        bottomNavigationBar: NavigationBar(
-          destinations: <Widget>[
-            NavigationDestination(
-                icon: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: SvgPicture.asset(
-                    Assets.imagesImgClock,
-                  ),
+        bottomNavigationBar: Container(
+          height: 65,
+          width: MediaQuery.of(context).size.width,
+          color: Colors.white,
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: SvgPicture.asset(
+                  Assets.imagesImgClock,
                 ),
-                label: ''),
-            NavigationDestination(icon: SvgPicture.asset(Assets.imagesImgHome), label: ''),
-            NavigationDestination(icon: SvgPicture.asset(Assets.imagesImgHome), label: ''),
-          ],
-          indicatorColor: Color(0XFFB2D8FF),
-          indicatorShape: RoundedRectangleBorder(),
+              ),
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: SvgPicture.asset(Assets.imagesImgHome),
+              ),
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: SvgPicture.asset(Assets.imagesImgHome),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -128,13 +134,13 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
   /// Section Widget
   Widget _buildPassengerDashboard(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: 5.v),
+      padding: EdgeInsets.only(bottom: 5.w),
       child: SingleChildScrollView(
         child: Column(
           children: [
             destinationLocation == null
                 ? Container(
-                    width: 400.v,
+                    width: 400.w,
                     height: 800.h,
                     child: MapLocationPicker(
                       apiKey: 'AIzaSyAqSuEn0aAlAx37yRyafg6WF_xNOOwUI38',
@@ -160,12 +166,12 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                   )
                 : Container(
                     color: Colors.white,
-                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 8),
                     margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 340.v,
+                          width: 330.w,
                           child: Text(
                             'Uticél:$destinationAddress',
                             style: theme.textTheme.titleLarge,
@@ -189,7 +195,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
               textStyle: theme.textTheme.bodyLarge,
               controller: personNumController,
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 15),
             GestureDetector(
               onTap: () async {
                 _requestLocationPermission();
@@ -198,16 +204,16 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                 }
               },
               child: Container(
-                height: 168.adaptSize,
-                width: 168.adaptSize,
+                height: 168.h,
+                width: 168.w,
                 padding: EdgeInsets.all(29.h),
                 decoration: AppDecoration.outlineBlack900.copyWith(
                   borderRadius: BorderRadiusStyle.circleBorder84,
                 ),
                 child: CustomImageView(
                   imagePath: Assets.imagesNewRideButton,
-                  height: 108.adaptSize,
-                  width: 108.adaptSize,
+                  height: 108.h,
+                  width: 108.w,
                   alignment: Alignment.center,
                 ),
               ),

@@ -1,13 +1,9 @@
-
-
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomImageView extends StatelessWidget {
-  ///[imagePath] is required parameter for showing image
-  String? imagePath;
+class CustomImageView extends StatefulWidget {
 
+  String? imagePath;
   double? height;
   double? width;
   Color? color;
@@ -34,10 +30,15 @@ class CustomImageView extends StatelessWidget {
   });
 
   @override
+  State<CustomImageView> createState() => _CustomImageViewState();
+}
+
+class _CustomImageViewState extends State<CustomImageView> {
+  @override
   Widget build(BuildContext context) {
-    return alignment != null
+    return widget.alignment != null
         ? Align(
-            alignment: alignment!,
+            alignment: widget.alignment!,
             child: _buildWidget(),
           )
         : _buildWidget();
@@ -45,18 +46,18 @@ class CustomImageView extends StatelessWidget {
 
   Widget _buildWidget() {
     return Padding(
-      padding: margin ?? EdgeInsets.zero,
+      padding: widget.margin ?? EdgeInsets.zero,
       child: InkWell(
-        onTap: onTap,
+        onTap: widget.onTap,
         child: _buildCircleImage(),
       ),
     );
   }
 
   _buildCircleImage() {
-    if (radius != null) {
+    if (widget.radius != null) {
       return ClipRRect(
-        borderRadius: radius ?? BorderRadius.zero,
+        borderRadius: widget.radius ?? BorderRadius.zero,
         child: _buildImageWithBorder(),
       );
     } else {
@@ -65,11 +66,11 @@ class CustomImageView extends StatelessWidget {
   }
 
   _buildImageWithBorder() {
-    if (border != null) {
+    if (widget.border != null) {
       return Container(
         decoration: BoxDecoration(
-          border: border,
-          borderRadius: radius,
+          border: widget.border,
+          borderRadius: widget.radius,
         ),
         child: _buildImageView(),
       );
@@ -79,37 +80,29 @@ class CustomImageView extends StatelessWidget {
   }
 
   Widget _buildImageView() {
-    if (imagePath != null) {
-      switch (imagePath!.imageType) {
+    if (widget.imagePath != null) {
+      switch (widget.imagePath!.imageType) {
         case ImageType.svg:
           return SizedBox(
-            height: height,
-            width: width,
+            height: widget.height,
+            width: widget.width,
             child: SvgPicture.asset(
-              imagePath!,
-              height: height,
-              width: width,
-              fit: fit ?? BoxFit.contain,
+              widget.imagePath!,
+              height: widget.height,
+              width: widget.width,
+              fit: widget.fit ?? BoxFit.scaleDown,
               colorFilter: ColorFilter.mode(
-                  color ?? Colors.transparent, BlendMode.srcIn),
+                  widget.color ?? Colors.transparent, BlendMode.srcIn),
             ),
-          );
-        case ImageType.file:
-          return Image.file(
-            File(imagePath!),
-            height: height,
-            width: width,
-            fit: fit ?? BoxFit.cover,
-            color: color,
           );
         case ImageType.png:
         default:
           return Image.asset(
-            imagePath!,
-            height: height,
-            width: width,
-            fit: fit ?? BoxFit.cover,
-            color: color,
+            widget.imagePath!,
+            height: widget.height,
+            width: widget.width,
+            fit: widget.fit ?? BoxFit.scaleDown,
+            color: widget.color,
           );
       }
     }

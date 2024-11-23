@@ -41,12 +41,11 @@ class UserService {
     return User.fromJson(resp.data as Map<String, dynamic>);
   }
 
-  Future<User> createPassenger(String email, String password, String name) async {
-    var resp = await _dio.post('/signUpPassenger',
-        data: {'email': email, 'password': password, 'name': name, 'type': '5'},
-        options: Options(responseType: ResponseType.json));
-    log(resp.data);
-    return User.fromJson(resp.data as Map<String, dynamic>);
+  Future<bool> createPassenger(String email, String password, String name) async {
+      var resp = await _dio.post('/signUpPassenger',
+          data: {'email': email, 'password': password, 'name': name},
+          options: Options(responseType: ResponseType.json));
+      return resp.statusCode == 200;
   }
 
   Future<User> logUserIn(String email, String password) async {
@@ -61,5 +60,18 @@ class UserService {
     await getIt.get<SecureStorage>().setValue('token', token);
     currentUser = User.fromJson(resp.data as Map<String, dynamic>);
     return currentUser!;
+  }
+
+  Future<bool> resetPassword(String email) async {
+    var resp = await _dio.post(
+      '/resetPassword',
+      data: {
+        'userEmail': email,
+      },
+    );
+    if (resp.statusCode == 200) {
+      return true;
+    }
+    return false;
   }
 }
