@@ -23,37 +23,54 @@ class _MapWidgetState extends State<MapWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
-        return Column(
-          children: [
-            SizedBox(
-              width: 400.w,
-              height: 800.h,
-              child: GoogleMap(
-                mapType: MapType.hybrid,
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    widget.initialPos.latitude,
-                    widget.initialPos.longitude,
-                  ),
-                  zoom: 14
+        return SizedBox(
+          width: 500.w,
+          height: 500.h,
+          child: GoogleMap(
+            mapType: MapType.hybrid,
+            initialCameraPosition: CameraPosition(
+                target: LatLng(
+                  widget.initialPos.latitude,
+                  widget.initialPos.longitude,
                 ),
-
-                zoomControlsEnabled: true,
-                zoomGesturesEnabled: true,
-                onMapCreated: (GoogleMapController controller) {
-                  _controller.complete(controller);
-                },
-                polylines: {
-                  Polyline(
-                    polylineId: const PolylineId('direction_polyline'),
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 5,
-                    points: (state as OrderLoaded).currentRoute.map((e) => LatLng(e.latitude, e.longitude)).toList(),
-                  )
-                },
+                zoom: 12),
+            zoomControlsEnabled: true,
+            zoomGesturesEnabled: true,
+            mapToolbarEnabled: false,
+            onMapCreated: (GoogleMapController controller) {
+              _controller.complete(controller);
+            },
+            markers: {
+              Marker(
+                markerId: MarkerId('passenger'),
+                position: LatLng(
+                  widget.initialPos.latitude,
+                  widget.initialPos.longitude,
+                ),
+                infoWindow: InfoWindow(
+                  title: 'Ön',
+                )
               ),
-            ),
-          ],
+              Marker(
+                  markerId: MarkerId('destination'),
+                  position: LatLng(
+                    (state as OrderLoaded).currentRoute.last.latitude,
+                    (state).currentRoute.last.longitude,
+                  ),
+                  infoWindow: InfoWindow(
+                    title: 'Úticél',
+                  )
+              ),
+            },
+            polylines: {
+              Polyline(
+                polylineId: const PolylineId('direction_polyline'),
+                color: Theme.of(context).colorScheme.primary,
+                width: 5,
+                points: (state).currentRoute.map((e) => LatLng(e.latitude, e.longitude)).toList(),
+              )
+            },
+          ),
         );
       },
     );

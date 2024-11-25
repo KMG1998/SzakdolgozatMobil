@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
@@ -139,9 +140,9 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
         child: Column(
           children: [
             destinationLocation == null
-                ? Container(
-                    width: 400.w,
-                    height: 800.h,
+                ? SizedBox(
+                    width: 500.w,
+                    height: 410.h,
                     child: MapLocationPicker(
                       apiKey: 'AIzaSyAqSuEn0aAlAx37yRyafg6WF_xNOOwUI38',
                       language: 'hu',
@@ -199,29 +200,32 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
             GestureDetector(
               onTap: () async {
                 _requestLocationPermission();
-                if (await Permission.location.isGranted && destinationLocation != null) {
-                  context.read<OrderCubit>().getOffer(destinationLocation!, int.parse(personNumController.text));
+                if (await Permission.location.isDenied) {
+                  Fluttertoast.showToast(msg: 'Kérjük, engedélyezze és kapcsolja be a GPS-t!');
+                  return;
                 }
+                if(destinationLocation == null){
+                  Fluttertoast.showToast(msg: 'Kérjük, válasszon uticélt!');
+                }
+                if(personNumController.text.isEmpty){
+                  Fluttertoast.showToast(msg: 'Kérjük, adja meg a személyek számát!');
+                }
+                context.read<OrderCubit>().getOffer(destinationLocation!, int.parse(personNumController.text));
               },
-              child: Container(
-                height: 168.h,
-                width: 168.w,
-                padding: EdgeInsets.all(29.h),
-                decoration: AppDecoration.outlineBlack900.copyWith(
-                  borderRadius: BorderRadiusStyle.circleBorder84,
-                ),
-                child: CustomImageView(
-                  imagePath: Assets.imagesNewRideButton,
-                  height: 108.h,
-                  width: 108.w,
-                  alignment: Alignment.center,
-                ),
+              child: Column(
+                children: [
+                  CustomImageView(
+                    imagePath: Assets.imagesNewRideButton,
+                    height: 130.h,
+                    width: 130.w,
+                    alignment: Alignment.center,
+                  ),
+                  Text(
+                    "Új foglalás",
+                    style: theme.textTheme.titleLarge,
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 25.h),
-            Text(
-              "Új foglalás",
-              style: theme.textTheme.titleLarge,
             ),
             SizedBox(
               height: 60.h,

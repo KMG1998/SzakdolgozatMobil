@@ -10,7 +10,6 @@ class Assets {
   static const String dashboardPassengerDashboardPage = 'lib/pages/dashboard/passenger_dashboard_page.dart';
   static const String fontsJetBrainsMonoRomanRegular = 'lib/assets/fonts/JetBrainsMonoRomanRegular.ttf';
   static const String generatedAssets = 'lib/generated/assets.dart';
-  static const String imagesImageNotFound = 'lib/assets/images/image_not_found.png';
   static const String imagesImgArrowDown = 'lib/assets/images/img_arrow_down.svg';
   static const String imagesImgArrowDownBlack900 = 'lib/assets/images/img_arrow_down_black_900.svg';
   static const String imagesImgArrowUp = 'lib/assets/images/img_arrow_up.svg';
@@ -43,7 +42,6 @@ class Assets {
   static const String userUserCubit = 'lib/qubit/user/user_cubit.dart';
   static const String userUserState = 'lib/qubit/user/user_state.dart';
   static const String utilsDateTimeUtils = 'lib/core/utils/date_time_utils.dart';
-  static const String utilsImageConstant = 'lib/core/utils/image_constant.dart';
   static const String utilsServiceLocator = 'lib/core/utils/service_locator.dart';
   static const String utilsValidators = 'lib/core/utils/validators.dart';
   static const String widgetsBaseButton = 'lib/widgets/base_button.dart';

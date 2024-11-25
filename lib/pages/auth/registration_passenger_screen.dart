@@ -146,7 +146,7 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
             .createPassenger(emailInputController.text, passwordInputController.text, nameInputController.text)
             .then((newUser) {
           debugPrint('success:$newUser');
-          if () {
+          if (true) {
             navigatorKey.currentState?.pushNamed(AppRoutes.loginScreen);
             return;
           }

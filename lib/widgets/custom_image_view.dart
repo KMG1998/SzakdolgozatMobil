@@ -8,7 +8,6 @@ class CustomImageView extends StatefulWidget {
   double? width;
   Color? color;
   BoxFit? fit;
-  final String placeHolder;
   Alignment? alignment;
   VoidCallback? onTap;
   EdgeInsetsGeometry? margin;
@@ -26,7 +25,6 @@ class CustomImageView extends StatefulWidget {
     this.radius,
     this.margin,
     this.border,
-    this.placeHolder = 'assets/images/image_not_found.png',
   });
 
   @override
