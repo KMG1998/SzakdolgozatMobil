@@ -14,11 +14,13 @@ class OrderError extends OrderState {
 }
 
 class OrderLoaded extends OrderState {
+  final VehicleData vehicleData;
   final Position currentPassengerPos;
   final List<PointLatLng> currentRoute;
 
   OrderLoaded({
     required this.currentPassengerPos,
     required this.currentRoute,
+    required this.vehicleData,
   });
 }

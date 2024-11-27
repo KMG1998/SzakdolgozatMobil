@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/offer_response.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/secureStorage.dart';
 
 class OrderService {
@@ -27,14 +30,14 @@ class OrderService {
     }));
   }
 
-  Future<dynamic> getOffer(
+  Future<OfferResponse?> getOffer(
       {required double passengerLat,
       required double passengerLongit,
       required double destLat,
       required double destLongit,
       required int personAmount}) async {
     try {
-      final resp = await _dio.post(
+      final resp = await _dio.post<String>(
         '/getOffer',
         data: {
           'passengerLat': passengerLat,
@@ -44,8 +47,7 @@ class OrderService {
           'personAmount': personAmount,
         },
       );
-      _logger.d(resp.data);
-      return (resp.data is List<dynamic>) ? resp.data : null;
+      return resp.data!.isNotEmpty ? OfferResponse.fromJson(jsonDecode(resp.data!)) : null;
     } catch (e) {
       _logger.e(e);
       return null;

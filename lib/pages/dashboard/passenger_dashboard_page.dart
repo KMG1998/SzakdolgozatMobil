@@ -8,8 +8,11 @@ import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/streamService.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';
@@ -78,14 +81,14 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                           padding: EdgeInsets.only(bottom: 5.w, top: 5.h),
                           child: Column(
                             children: [
+                              //Text(state.vehicleData.vehicleColor),
                               MapWidget(initialPos: state.currentPassengerPos),
                               CustomOutlinedButton(
                                 text: 'off',
                                 onPressed: () {
-                                  _logger.d('clicked');
                                   destinationLocation = null;
                                   destinationAddress = null;
-                                  context.read<OrderCubit>().finishRide();
+                                  context.read<OrderCubit>().cancelRide();
                                 },
                               )
                             ],

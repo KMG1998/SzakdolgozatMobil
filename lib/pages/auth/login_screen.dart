@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/popups/forgot_password_dialog.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
@@ -19,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _logger = Logger();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,14 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
         body: Container(
-          width: MediaQuery
-              .of(context)
-              .size
-              .width,
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: const Alignment(0.5, 0),
@@ -56,9 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Padding(
                     padding: EdgeInsets.only(bottom: 164.h),
                     child: Form(
-                      key: context
-                          .read<AuthCubit>()
-                          .formKey,
+                      key: context.read<AuthCubit>().formKey,
                       child: Column(
                         children: [
                           CustomImageView(
@@ -74,13 +64,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 7.h),
                           CustomTextFormField(
                             width: 500.w,
-                            controller: context
-                                .read<AuthCubit>()
-                                .emailInputController,
+                            controller: context.read<AuthCubit>().emailInputController,
                             validator: (email) => Validators.emailValidator(email),
-                            focusNode: context
-                                .read<AuthCubit>()
-                                .emailFocus,
+                            focusNode: context.read<AuthCubit>().emailFocus,
                             autofocus: false,
                           ),
                           SizedBox(height: 31.h),
@@ -91,16 +77,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 7.h),
                           CustomTextFormField(
                             width: 500.w,
-                            controller: context
-                                .read<AuthCubit>()
-                                .passwordInputController,
+                            controller: context.read<AuthCubit>().passwordInputController,
                             textInputAction: TextInputAction.done,
                             obscureText: true,
                             autoCorrect: false,
                             enableSuggestions: false,
-                            focusNode: context
-                                .read<AuthCubit>()
-                                .passwordFocus,
+                            focusNode: context.read<AuthCubit>().passwordFocus,
                             validator: (password) => Validators.passwordValidator(password),
                             autofocus: false,
                           ),
@@ -113,8 +95,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   context: context,
                                   builder: (context) {
                                     return ForgotPasswordDialog();
-                                  }).then((value){
-                                    context.read<AuthCubit>().reset();
+                                  }).then((value) {
+                                context.read<AuthCubit>().reset();
                               });
                             },
                             child: Text(

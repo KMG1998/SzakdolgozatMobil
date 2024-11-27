@@ -7,6 +7,7 @@ class Assets {
   static const String authLoginScreen = 'lib/pages/auth/login_screen.dart';
   static const String authRegistrationPassengerScreen = 'lib/pages/auth/registration_passenger_screen.dart';
   static const String coreAppExport = 'lib/core/app_export.dart';
+  static const String coreEnums = 'lib/core/enums.dart';
   static const String dashboardPassengerDashboardPage = 'lib/pages/dashboard/passenger_dashboard_page.dart';
   static const String fontsJetBrainsMonoRomanRegular = 'lib/assets/fonts/JetBrainsMonoRomanRegular.ttf';
   static const String generatedAssets = 'lib/generated/assets.dart';
@@ -22,9 +23,11 @@ class Assets {
   static const String imagesImgVector = 'lib/assets/images/img_vector.svg';
   static const String imagesNewRideButton = 'lib/assets/images/new_ride_button.png';
   static const String libMain = 'lib/main.dart';
-  static const String modelsDriverLocation = 'lib/models/DriverLocation.dart';
+  static const String modelsOfferResponse = 'lib/models/offer_response.dart';
   static const String modelsOrder = 'lib/models/Order.dart';
+  static const String modelsStreamData = 'lib/models/StreamData.dart';
   static const String modelsUser = 'lib/models/User.dart';
+  static const String modelsVehicleData = 'lib/models/vehicle_data.dart';
   static const String orderOrderCubit = 'lib/qubit/order/order_cubit.dart';
   static const String orderOrderState = 'lib/qubit/order/order_state.dart';
   static const String popupsForgotPasswordDialog = 'lib/core/popups/forgot_password_dialog.dart';
@@ -33,6 +36,7 @@ class Assets {
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
   static const String servicesOrderService = 'lib/services/orderService.dart';
   static const String servicesSecureStorage = 'lib/services/secureStorage.dart';
+  static const String servicesStreamService = 'lib/services/streamService.dart';
   static const String servicesUserService = 'lib/services/userService.dart';
   static const String servicesVehicleToUserService = 'lib/services/vehicleToUserService.dart';
   static const String themeAppDecoration = 'lib/theme/app_decoration.dart';
@@ -48,7 +52,6 @@ class Assets {
   static const String widgetsCustomIconButton = 'lib/widgets/custom_icon_button.dart';
   static const String widgetsCustomImageView = 'lib/widgets/custom_image_view.dart';
   static const String widgetsCustomOutlinedButton = 'lib/widgets/custom_outlined_button.dart';
-  static const String widgetsCustomRadioButton = 'lib/widgets/custom_radio_button.dart';
   static const String widgetsCustomTextFormField = 'lib/widgets/custom_text_form_field.dart';
   static const String widgetsMapWidget = 'lib/widgets/map_widget.dart';
 
