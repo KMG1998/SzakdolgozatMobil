@@ -12,7 +12,7 @@ import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/streamService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/socket_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';

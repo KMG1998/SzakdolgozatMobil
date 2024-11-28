@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/secureStorage.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/streamService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/socket_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/vehicleToUserService.dart';
 

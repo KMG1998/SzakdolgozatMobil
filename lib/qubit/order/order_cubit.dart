@@ -9,7 +9,8 @@ import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/vehicle_data.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/streamService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/secureStorage.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/socket_service.dart';
 
 part 'order_state.dart';
 
@@ -32,7 +33,8 @@ class OrderCubit extends Cubit<OrderState> {
         return;
       }
       var currentRoute = PolylinePoints().decodePolyline(offerResp.routes[0].overviewPolyline!.points!);
-      getIt.get<SocketService>().connectToRoom(offerResp.socketRoomId);
+      final token = await getIt.get<SecureStorage>().getValue('token');
+      getIt.get<SocketService>().connectToRoom(offerResp.socketRoomId, token!, _onDriverCancel);
       emit(
           OrderLoaded(vehicleData: offerResp.vehicleData, currentPassengerPos: currentPos, currentRoute: currentRoute));
     } catch (e) {
@@ -45,11 +47,15 @@ class OrderCubit extends Cubit<OrderState> {
     try {
       final socketService = getIt.get<SocketService>();
       emit(OrderLoading());
-      socketService.emitData(StreamData(dataType: StreamDataType.passengerCancel, data: ''));
+      socketService.emitData(StreamData(dataType: SocketDataType.passengerCancel, data: ''));
       socketService.disconnectChannel();
       emit(OrderInit());
     } catch (e) {
       _logger.e(e);
     }
+  }
+
+  _onDriverCancel() {
+    emit(OrderInit(error: 'A sofőr visszautasította'));
   }
 }

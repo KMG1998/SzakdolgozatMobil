@@ -1,6 +1,7 @@
-enum StreamDataType{
+enum SocketDataType{
   driverGeoData,
   passengerCancel,
   driverCancel,
-  joinRoom
+  joinRoom,
+  leaveRoom
 }

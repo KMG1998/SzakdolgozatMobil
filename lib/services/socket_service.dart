@@ -11,7 +11,7 @@ class SocketService {
   String _currentRoomId = '';
   final _socket = io('http://10.0.2.2:8085', <String, dynamic>{
     'transports': ['websocket'],
-    'autoConnect': false
+    'autoConnect': false,
   });
   final _logger = Logger();
 
@@ -29,17 +29,21 @@ class SocketService {
     _socket.connect();
   }
 
-  void connectToRoom(String channelId) {
+  void connectToRoom(String channelId, String token, void Function() onDriverCancel) {
     _currentRoomId = channelId;
-    _logger.d(_currentRoomId);
-    _socket.emit(StreamDataType.joinRoom.name, _currentRoomId);
-    _socket.on(StreamDataType.driverGeoData.name, (data) async {
+    _socket.io.options!['extraHeaders'] = {'token': token};
+    _socket.emit(SocketDataType.joinRoom.name, _currentRoomId);
+    _socket.on(SocketDataType.driverGeoData.name, (data) async {
       try {
         final streamData = StreamData.fromJson(jsonDecode(data));
         _logger.d(streamData);
       } catch (e) {
         _logger.e(e);
       }
+    });
+    _socket.on(SocketDataType.driverCancel.name, (data) {
+      onDriverCancel();
+      _socket.emit(SocketDataType.leaveRoom.name, _currentRoomId);
     });
   }
 
