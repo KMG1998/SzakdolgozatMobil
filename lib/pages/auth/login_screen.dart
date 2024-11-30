@@ -59,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 5.h),
                           Text(
                             "E-mail",
-                            style: theme.textTheme.headlineMedium,
+                            style: theme.textTheme.headlineLarge,
                           ),
                           SizedBox(height: 7.h),
                           CustomTextFormField(
@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           SizedBox(height: 31.h),
                           Text(
                             "Jelszó",
-                            style: theme.textTheme.headlineMedium,
+                            style: theme.textTheme.headlineLarge,
                           ),
                           SizedBox(height: 7.h),
                           CustomTextFormField(

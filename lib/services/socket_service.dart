@@ -17,7 +17,11 @@ class SocketService {
   );
   final _logger = Logger();
 
-  final List<String> listenerNames = [SocketDataType.driverGeoData.name, SocketDataType.driverCancel.name];
+  final List<String> listenerNames = [
+    SocketDataType.driverGeoData.name,
+    SocketDataType.driverCancel.name,
+    SocketDataType.finishOrder.name,
+  ];
 
   SocketService() {
     _logger.d('create stream service');
@@ -33,7 +37,7 @@ class SocketService {
     _socket.connect();
   }
 
-  void connectToRoom(String roomId, void Function() onDriverCancel) {
+  void connectToRoom(String roomId, void Function() onDriverCancel, void Function() onOrderFinish) {
     _socket.emit(SocketDataType.joinRoom.name, roomId);
     _socket.on(SocketDataType.driverGeoData.name, (data) async {
       try {
@@ -43,10 +47,16 @@ class SocketService {
         _logger.e(e);
       }
     });
-    _socket.on(SocketDataType.driverCancel.name, (data) {
-      onDriverCancel();
-      _logger.d('driver cancel');
+    _socket.on(SocketDataType.finishOrder.name, (data) {
+      onOrderFinish();
       _socket.emit(SocketDataType.leaveRoom.name, roomId);
+      disconnectRoom();
+    });
+    _socket.on(SocketDataType.driverCancel.name, (data) {
+      _logger.e('recieved driver cancel');
+      onDriverCancel();
+      _socket.emit(SocketDataType.leaveRoom.name, roomId);
+      disconnectRoom();
     });
   }
 
@@ -54,11 +64,9 @@ class SocketService {
     return _dataStream.stream;
   }
 
-  void emitData(SocketDataType emitType, StreamData data) async {
+  Future<void> emitData(SocketDataType emitType, StreamData data) async {
     final token = await getIt.get<FlutterSecureStorage>().read(key: 'token');
     final roomId = await getIt.get<FlutterSecureStorage>().read(key: 'roomId');
-    _logger.d('the feckin room id is $roomId');
-    _logger.d('the feckin token id is $token');
     _socket.emit(
       emitType.name,
       jsonEncode(
@@ -67,10 +75,8 @@ class SocketService {
     );
   }
 
-  void disconnectChannel() {
+  void disconnectRoom() {
     try {
-      _socket.off('dataTransfer');
-      _logger.d(_socket.listenersAny());
       for (String listenerName in listenerNames) {
         _socket.off(listenerName);
       }

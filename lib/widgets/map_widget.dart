@@ -24,7 +24,7 @@ class _MapWidgetState extends State<MapWidget> {
     return BlocBuilder<OrderCubit, OrderState>(
       builder: (context, state) {
         return SizedBox(
-          width: 500.w,
+          width: 550.w,
           height: 500.h,
           child: GoogleMap(
             mapType: MapType.hybrid,

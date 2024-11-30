@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 

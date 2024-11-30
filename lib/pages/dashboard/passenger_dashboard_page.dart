@@ -8,11 +8,9 @@ import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/socket_service.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_nav_bar.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';
@@ -28,12 +26,18 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
   Location? destinationLocation;
   String? destinationAddress;
   final _logger = Logger();
-  TextEditingController personNumController = TextEditingController();
+  final TextEditingController personNumController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     _requestLocationPermission();
+  }
+
+  @override
+  void dispose(){
+    personNumController.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,25 +47,22 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
         extendBody: true,
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: const Alignment(0.5, 0),
-              end: const Alignment(0.5, 1),
-              colors: [
-                theme.colorScheme.primaryContainer,
-                appTheme.blue100,
-                theme.colorScheme.onSecondaryContainer,
-              ],
-            ),
-          ),
+        body: SingleChildScrollView(
           child: Container(
-            width: double.maxFinite,
-            padding: EdgeInsets.symmetric(vertical: 1.w),
-            decoration: AppDecoration.gradientPrimaryContainerToOnSecondaryContainer,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: const Alignment(0.5, 0),
+                end: const Alignment(0.5, 1),
+                colors: [
+                  theme.colorScheme.primaryContainer,
+                  appTheme.blue100,
+                  theme.colorScheme.onSecondaryContainer,
+                ],
+              ),
+            ),
             child: Column(
               children: [
                 Expanded(
@@ -80,11 +81,40 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                         return Padding(
                           padding: EdgeInsets.only(bottom: 5.w, top: 5.h),
                           child: Column(
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              //Text(state.vehicleData.vehicleColor),
+                              Container(
+                                color: Colors.white,
+                                padding: EdgeInsets.all(10),
+                                width: 550.w,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Sofőr átlaga: ${state.vehicleData.reviewAvg?.toStringAsFixed(2)}',
+                                      style: theme.textTheme.titleLarge,
+                                    ),
+                                    Text(
+                                      'Jármű színe: ${state.vehicleData.vehicleColor}',
+                                      style: theme.textTheme.titleLarge,
+                                    ),
+                                    Text(
+                                      'Jármű Típusa: ${state.vehicleData.vehicleType}',
+                                      style: theme.textTheme.titleLarge,
+                                    ),
+                                    Text(
+                                      'Jármű rendszáma: ${state.vehicleData.vehiclePlate}',
+                                      style: theme.textTheme.titleLarge,
+                                    ),
+                                  ],
+                                ),
+                              ),
                               MapWidget(initialPos: state.currentPassengerPos),
+                              SizedBox(height: 20),
                               CustomOutlinedButton(
-                                text: 'off',
+                                text: 'Mégse',
+                                buttonStyle: CustomButtonStyles.outlineRed,
                                 onPressed: () {
                                   destinationLocation = null;
                                   destinationAddress = null;
@@ -104,38 +134,12 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          height: 65,
-          width: MediaQuery.of(context).size.width,
-          color: Colors.white,
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SvgPicture.asset(
-                  Assets.imagesImgClock,
-                ),
-              ),
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SvgPicture.asset(Assets.imagesImgHome),
-              ),
-              SizedBox(
-                width: 50,
-                height: 50,
-                child: SvgPicture.asset(Assets.imagesImgHome),
-              ),
-            ],
-          ),
-        ),
+        bottomNavigationBar: CustomNavBar(activeNum: 1)
       ),
     );
   }
 
-  /// Section Widget
+
   Widget _buildPassengerDashboard(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(bottom: 5.w),
@@ -207,10 +211,10 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                   Fluttertoast.showToast(msg: 'Kérjük, engedélyezze és kapcsolja be a GPS-t!');
                   return;
                 }
-                if(destinationLocation == null){
+                if (destinationLocation == null) {
                   Fluttertoast.showToast(msg: 'Kérjük, válasszon uticélt!');
                 }
-                if(personNumController.text.isEmpty){
+                if (personNumController.text.isEmpty) {
                   Fluttertoast.showToast(msg: 'Kérjük, adja meg a személyek számát!');
                 }
                 context.read<OrderCubit>().getOffer(destinationLocation!, int.parse(personNumController.text));

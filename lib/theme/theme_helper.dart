@@ -94,31 +94,31 @@ class ThemeHelper {
 /// Class containing the supported text theme styles.
 class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
-        bodyMedium: TextStyle(
-          color: appTheme.black900,
-          fontSize: 16,
-          fontFamily: 'JetBrains Mono',
-          fontWeight: FontWeight.w400,
-        ),
-        headlineLarge: TextStyle(
-          color: appTheme.black900,
-          fontSize: 30,
-          fontFamily: 'JetBrains Mono',
-          fontWeight: FontWeight.w400,
-        ),
-        headlineSmall: TextStyle(
-          color: appTheme.black900,
-          fontSize: 25,
-          fontFamily: 'JetBrains Mono',
-          fontWeight: FontWeight.w400,
-        ),
-        titleLarge: TextStyle(
-          color: appTheme.black900,
-          fontSize: 20,
-          fontFamily: 'JetBrains Mono',
-          fontWeight: FontWeight.w400,
-        ),
-      );
+    bodyMedium: TextStyle(
+      color: appTheme.black900,
+      fontSize: 14.sp,
+      fontFamily: 'JetBrains Mono',
+      fontWeight: FontWeight.w400,
+    ),
+    headlineLarge: TextStyle(
+      color: appTheme.black900,
+      fontSize: 30.sp,
+      fontFamily: 'JetBrains Mono',
+      fontWeight: FontWeight.w400,
+    ),
+    headlineSmall: TextStyle(
+      color: appTheme.black900,
+      fontSize: 25.sp,
+      fontFamily: 'JetBrains Mono',
+      fontWeight: FontWeight.w400,
+    ),
+    titleLarge: TextStyle(
+      color: appTheme.black900,
+      fontSize: 20.sp,
+      fontFamily: 'JetBrains Mono',
+      fontWeight: FontWeight.w400,
+    ),
+  );
 }
 
 /// Class containing the supported color schemes.

@@ -10,7 +10,7 @@ class UserService {
   final _dio = Dio(BaseOptions(
     baseUrl: 'http://10.0.2.2:8085/user',
     connectTimeout: const Duration(seconds: 5),
-    receiveTimeout: const Duration(seconds: 3),
+    receiveTimeout: const Duration(seconds: 5),
     headers: {
       'Content-Type': 'application/json',
       'accept': 'application/json',
@@ -21,8 +21,6 @@ class UserService {
   ));
 
   final _logger = Logger();
-
-  User? currentUser;
 
   UserService() {
     _dio.interceptors
@@ -47,7 +45,7 @@ class UserService {
       return resp.statusCode == 200;
   }
 
-  Future<User> logUserIn(String email, String password) async {
+  Future<bool> logUserIn(String email, String password) async {
     var resp = await _dio.post(
       '/signInPassenger',
       data: {
@@ -57,8 +55,7 @@ class UserService {
     );
     final token = resp.headers['set-cookie']![0].split(';')[0].split('=')[1];
     await getIt.get<FlutterSecureStorage>().write(key: 'token', value: token);
-    currentUser = User.fromJson(resp.data as Map<String, dynamic>);
-    return currentUser!;
+    return resp.statusCode == 200;
   }
 
   Future<bool> resetPassword(String email) async {

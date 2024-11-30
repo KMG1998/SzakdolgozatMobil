@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/userService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 
 import '../../models/User.dart';
 
@@ -31,9 +31,10 @@ class AuthCubit extends Cubit<AuthState> {
     }
     emit(AuthInProgress());
     try {
-      User? userData =
-          await getIt.get<UserService>().logUserIn(emailInputController.text, passwordInputController.text);
-      emit(AuthSuccess(userData: userData));
+      bool success = await getIt.get<UserService>().logUserIn(emailInputController.text, passwordInputController.text);
+      if(success){
+        emit(AuthSuccess());
+      }
     } catch (e) {
       logger.e(e);
       emit(AuthFail(e));

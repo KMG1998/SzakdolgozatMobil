@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/auth/login_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/user/user_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => AuthCubit()),
             BlocProvider(create: (context) => OrderCubit()),
             BlocProvider(create: (context) => UserCubit()),
+            BlocProvider(create: (context) => HistoryCubit()),
           ],
           child: MaterialApp(
               theme: theme,

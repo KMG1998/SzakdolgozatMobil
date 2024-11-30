@@ -17,7 +17,9 @@ class VehicleData {
         vehiclePlate = json['vehiclePlate'] as String,
         vehicleType = json['vehicleType'] as String,
         seatCount = json['seatCount'] as int,
-        reviewAvg = json['reviewAvg'] as double?;
+        reviewAvg = json['reviewAvg'] is int
+            ? (json['reviewAvg'] as int).toDouble()
+            : json['reviewAvg'] as double?;
 
   Map<String, dynamic> toJson() => {
         'vehicleColor': vehicleColor,

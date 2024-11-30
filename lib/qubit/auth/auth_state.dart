@@ -8,9 +8,7 @@ class AuthInit extends AuthState {}
 class AuthInProgress extends AuthState {}
 
 class AuthSuccess extends AuthState {
-  final User userData;
-
-  AuthSuccess({required this.userData});
+  AuthSuccess();
 }
 
 class AuthFail extends AuthState{

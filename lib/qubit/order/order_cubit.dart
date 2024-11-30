@@ -7,10 +7,14 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/popups/order_review_dialog.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/order_review.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/vehicle_data.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/order_service.dart';
+import 'package:szakdolgozat_magantaxi_mobil/services/review_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/socket_service.dart';
 
 part 'order_state.dart';
@@ -37,8 +41,7 @@ class OrderCubit extends Cubit<OrderState> {
       _logger.d(offerResp.routes);
       var currentRoute = PolylinePoints().decodePolyline(offerResp.routes[0].overviewPolyline!.points!);
       await getIt.get<FlutterSecureStorage>().write(key: 'roomId', value: offerResp.socketRoomId);
-      _logger.e('set room id: ${await getIt.get<FlutterSecureStorage>().read(key: 'roomId')}');
-      getIt.get<SocketService>().connectToRoom(offerResp.socketRoomId, _onDriverCancel);
+      getIt.get<SocketService>().connectToRoom(offerResp.socketRoomId, _onDriverCancel,_onOrderFinish);
       emit(
           OrderLoaded(vehicleData: offerResp.vehicleData, currentPassengerPos: currentPos, currentRoute: currentRoute));
     } catch (e) {
@@ -47,18 +50,36 @@ class OrderCubit extends Cubit<OrderState> {
     }
   }
 
-  cancelRide() {
+  cancelRide() async {
     try {
       emit(OrderLoading());
-      getIt.get<SocketService>().emitData(SocketDataType.passengerCancel, StreamData(data: ''));
-      getIt.get<SocketService>().disconnectChannel();
+      await getIt.get<SocketService>().emitData(SocketDataType.passengerCancel, StreamData(data: ''));
+      getIt.get<SocketService>().disconnectRoom();
       emit(OrderInit());
     } catch (e) {
       _logger.e(e);
     }
   }
 
+  _createReview() async {
+    OrderReview? newReview;
+    await showDialog<OrderReview?>(context: navigatorKey.currentContext!, builder: (ctx) => OrderReviewDialog()).then((value) => {
+      newReview = value
+    });
+    if(newReview != null){
+      final success = await getIt.get<ReviewService>().createReview(score: newReview!.score,reviewText: newReview!.reviewText);
+      if(success){
+        Fluttertoast.showToast(msg: 'Sikeres értékelés');
+      }
+    }
+  }
+
   _onDriverCancel() {
     emit(OrderInit(error: 'A sofőr visszautasította'));
+
+  }
+  _onOrderFinish() async{
+    await _createReview();
+    emit(OrderInit());
   }
 }
