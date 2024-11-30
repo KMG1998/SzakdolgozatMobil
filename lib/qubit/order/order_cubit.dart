@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
@@ -9,7 +11,6 @@ import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/vehicle_data.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/orderService.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/secureStorage.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/socket_service.dart';
 
 part 'order_state.dart';
@@ -29,12 +30,15 @@ class OrderCubit extends Cubit<OrderState> {
           destLongit: destLoc.lng,
           personAmount: personAmount);
       if (offerResp == null) {
-        emit(OrderError(errorMessage: 'NO_AVAILABLE_DRIVER'));
+        Fluttertoast.showToast(msg: 'Nincs elérhető sofőr');
+        emit(OrderError(errorMessage: 'Nincs elérhető sofőr'));
         return;
       }
+      _logger.d(offerResp.routes);
       var currentRoute = PolylinePoints().decodePolyline(offerResp.routes[0].overviewPolyline!.points!);
-      final token = await getIt.get<SecureStorage>().getValue('token');
-      getIt.get<SocketService>().connectToRoom(offerResp.socketRoomId, token!, _onDriverCancel);
+      await getIt.get<FlutterSecureStorage>().write(key: 'roomId', value: offerResp.socketRoomId);
+      _logger.e('set room id: ${await getIt.get<FlutterSecureStorage>().read(key: 'roomId')}');
+      getIt.get<SocketService>().connectToRoom(offerResp.socketRoomId, _onDriverCancel);
       emit(
           OrderLoaded(vehicleData: offerResp.vehicleData, currentPassengerPos: currentPos, currentRoute: currentRoute));
     } catch (e) {
@@ -45,10 +49,9 @@ class OrderCubit extends Cubit<OrderState> {
 
   cancelRide() {
     try {
-      final socketService = getIt.get<SocketService>();
       emit(OrderLoading());
-      socketService.emitData(StreamData(dataType: SocketDataType.passengerCancel, data: ''));
-      socketService.disconnectChannel();
+      getIt.get<SocketService>().emitData(SocketDataType.passengerCancel, StreamData(data: ''));
+      getIt.get<SocketService>().disconnectChannel();
       emit(OrderInit());
     } catch (e) {
       _logger.e(e);

@@ -35,8 +35,7 @@ class Assets {
   static const String popupsReserveRejectedPopupDialog = 'lib/core/popups/reserve_rejected_popup_dialog.dart';
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
   static const String servicesOrderService = 'lib/services/orderService.dart';
-  static const String servicesSecureStorage = 'lib/services/secureStorage.dart';
-  static const String servicesStreamService = 'lib/services/socket_service.dart';
+  static const String servicesSocketService = 'lib/services/socket_service.dart';
   static const String servicesUserService = 'lib/services/userService.dart';
   static const String servicesVehicleToUserService = 'lib/services/vehicleToUserService.dart';
   static const String themeAppDecoration = 'lib/theme/app_decoration.dart';

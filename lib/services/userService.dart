@@ -1,8 +1,8 @@
 
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
-import 'package:szakdolgozat_magantaxi_mobil/services/secureStorage.dart';
 
 import '../core/utils/service_locator.dart';
 
@@ -27,7 +27,7 @@ class UserService {
   UserService() {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
-      options.headers['cookie'] = 'token=${await getIt.get<SecureStorage>().getValue('token')};';
+      options.headers['cookie'] = 'token=${await getIt.get<FlutterSecureStorage>().read(key:'token')};';
       handler.next(options);
     }));
   }
@@ -56,7 +56,7 @@ class UserService {
       },
     );
     final token = resp.headers['set-cookie']![0].split(';')[0].split('=')[1];
-    await getIt.get<SecureStorage>().setValue('token', token);
+    await getIt.get<FlutterSecureStorage>().write(key: 'token', value: token);
     currentUser = User.fromJson(resp.data as Map<String, dynamic>);
     return currentUser!;
   }
