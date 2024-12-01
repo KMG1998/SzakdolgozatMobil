@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:szakdolgozat_magantaxi_mobil/gen/assets.gen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/app_decoration.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';

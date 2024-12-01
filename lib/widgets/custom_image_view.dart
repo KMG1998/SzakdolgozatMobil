@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomImageView extends StatefulWidget {
-
   String? imagePath;
   double? height;
   double? width;
@@ -14,7 +13,8 @@ class CustomImageView extends StatefulWidget {
   BorderRadius? radius;
   BoxBorder? border;
 
-  CustomImageView({super.key, 
+  CustomImageView({
+    super.key,
     this.imagePath,
     this.height,
     this.width,
@@ -89,8 +89,7 @@ class _CustomImageViewState extends State<CustomImageView> {
               height: widget.height,
               width: widget.width,
               fit: widget.fit ?? BoxFit.scaleDown,
-              colorFilter: ColorFilter.mode(
-                  widget.color ?? Colors.transparent, BlendMode.srcIn),
+              colorFilter: ColorFilter.mode(widget.color ?? Colors.transparent, BlendMode.srcIn),
             ),
           );
         case ImageType.png:
@@ -110,16 +109,12 @@ class _CustomImageViewState extends State<CustomImageView> {
 
 extension ImageTypeExtension on String {
   ImageType get imageType {
-    if (startsWith('http') || startsWith('https')) {
-      return ImageType.network;
-    } else if (endsWith('.svg')) {
+    if (endsWith('.svg')) {
       return ImageType.svg;
-    } else if (startsWith('file://')) {
-      return ImageType.file;
     } else {
       return ImageType.png;
     }
   }
 }
 
-enum ImageType { svg, png, network, file, unknown }
+enum ImageType { svg, png, unknown }

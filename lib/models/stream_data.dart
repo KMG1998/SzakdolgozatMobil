@@ -1,4 +1,3 @@
-import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 
 class StreamData {
   final String data;

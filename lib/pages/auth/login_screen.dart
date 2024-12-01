@@ -5,7 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/popups/forgot_password_dialog.dart';
-import 'package:szakdolgozat_magantaxi_mobil/generated/assets.dart';
+import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
@@ -20,101 +20,104 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: const Alignment(0.5, 0),
-              end: const Alignment(0.5, 1),
-              colors: [
-                theme.colorScheme.primaryContainer,
-                appTheme.blue100,
-                theme.colorScheme.onSecondaryContainer,
-              ],
+    return PopScope(
+      canPop: false,
+      child: SafeArea(
+        child: Scaffold(
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: const Alignment(0.5, 0),
+                end: const Alignment(0.5, 1),
+                colors: [
+                  theme.colorScheme.primaryContainer,
+                  appTheme.blue100,
+                  theme.colorScheme.onSecondaryContainer,
+                ],
+              ),
             ),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SizedBox(height: 5.h),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 164.h),
-                    child: Form(
-                      key: context.read<AuthCubit>().formKey,
-                      child: Column(
-                        children: [
-                          CustomImageView(
-                            imagePath: Assets.imagesImgMagantaxiLogo1,
-                            height: 319.h,
-                            width: 319.w,
-                          ),
-                          SizedBox(height: 5.h),
-                          Text(
-                            "E-mail",
-                            style: theme.textTheme.headlineLarge,
-                          ),
-                          SizedBox(height: 7.h),
-                          CustomTextFormField(
-                            width: 500.w,
-                            controller: context.read<AuthCubit>().emailInputController,
-                            validator: (email) => Validators.emailValidator(email),
-                            focusNode: context.read<AuthCubit>().emailFocus,
-                            autofocus: false,
-                          ),
-                          SizedBox(height: 31.h),
-                          Text(
-                            "Jelszó",
-                            style: theme.textTheme.headlineLarge,
-                          ),
-                          SizedBox(height: 7.h),
-                          CustomTextFormField(
-                            width: 500.w,
-                            controller: context.read<AuthCubit>().passwordInputController,
-                            textInputAction: TextInputAction.done,
-                            obscureText: true,
-                            autoCorrect: false,
-                            enableSuggestions: false,
-                            focusNode: context.read<AuthCubit>().passwordFocus,
-                            validator: (password) => Validators.passwordValidator(password),
-                            autofocus: false,
-                          ),
-                          SizedBox(height: 32.h),
-                          _loginButton(),
-                          SizedBox(height: 52.h),
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return ForgotPasswordDialog();
-                                  }).then((value) {
-                                context.read<AuthCubit>().reset();
-                              });
-                            },
-                            child: Text(
-                              "Elfelejtett jelszó",
-                              style: theme.textTheme.titleLarge!.copyWith(
-                                decoration: TextDecoration.underline,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 5.h),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 164.h),
+                      child: Form(
+                        key: context.read<AuthCubit>().formKey,
+                        child: Column(
+                          children: [
+                            CustomImageView(
+                              imagePath: Assets.lib.assets.images.magantaxiLogo.path,
+                              height: 319.h,
+                              width: 319.w,
+                            ),
+                            SizedBox(height: 5.h),
+                            Text(
+                              "E-mail",
+                              style: theme.textTheme.headlineLarge,
+                            ),
+                            SizedBox(height: 7.h),
+                            CustomTextFormField(
+                              width: 500.w,
+                              controller: context.read<AuthCubit>().emailInputController,
+                              validator: (email) => Validators.emailValidator(email),
+                              focusNode: context.read<AuthCubit>().emailFocus,
+                              autofocus: false,
+                            ),
+                            SizedBox(height: 31.h),
+                            Text(
+                              "Jelszó",
+                              style: theme.textTheme.headlineLarge,
+                            ),
+                            SizedBox(height: 7.h),
+                            CustomTextFormField(
+                              width: 500.w,
+                              controller: context.read<AuthCubit>().passwordInputController,
+                              textInputAction: TextInputAction.done,
+                              obscureText: true,
+                              autoCorrect: false,
+                              enableSuggestions: false,
+                              focusNode: context.read<AuthCubit>().passwordFocus,
+                              validator: (password) => Validators.passwordValidator(password),
+                              autofocus: false,
+                            ),
+                            SizedBox(height: 32.h),
+                            _loginButton(),
+                            SizedBox(height: 52.h),
+                            GestureDetector(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return ForgotPasswordDialog();
+                                    }).then((value) {
+                                  context.read<AuthCubit>().reset();
+                                });
+                              },
+                              child: Text(
+                                "Elfelejtett jelszó",
+                                style: theme.textTheme.titleLarge!.copyWith(
+                                  decoration: TextDecoration.underline,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 56.w),
-                          _registerButton(context),
-                        ],
+                            SizedBox(height: 56.w),
+                            _registerButton(context),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -137,7 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          Navigator.pushNamed(context, AppRoutes.passengerDashboardPage);
+          Navigator.pushReplacementNamed(context, AppRoutes.passengerDashboardPage);
         }
         if (state is AuthFail) {
           Fluttertoast.showToast(

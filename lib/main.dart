@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/auth/login_screen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/dashboard/passenger_dashboard_page.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/splash/splash_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
               theme: theme,
               debugShowCheckedModeBanner: false,
-              home: const LoginScreen(),
+              home: const SplashScreen(),
               routes: AppRoutes.routes,
               navigatorKey: navigatorKey,
               localizationsDelegates: [

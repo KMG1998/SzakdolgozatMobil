@@ -22,38 +22,16 @@ class $LibGen {
 class $LibAssetsGen {
   const $LibAssetsGen();
 
-  /// Directory path: lib/assets/fonts
-  $LibAssetsFontsGen get fonts => const $LibAssetsFontsGen();
-
   /// Directory path: lib/assets/images
   $LibAssetsImagesGen get images => const $LibAssetsImagesGen();
-}
-
-class $LibAssetsFontsGen {
-  const $LibAssetsFontsGen();
-
-  /// File path: lib/assets/fonts/JetBrainsMonoRomanRegular.ttf
-  String get jetBrainsMonoRomanRegular =>
-      'lib/assets/fonts/JetBrainsMonoRomanRegular.ttf';
-
-  /// List of all assets
-  List<String> get values => [jetBrainsMonoRomanRegular];
 }
 
 class $LibAssetsImagesGen {
   const $LibAssetsImagesGen();
 
-  /// File path: lib/assets/images/img_arrow_down.svg
-  SvgGenImage get imgArrowDown =>
-      const SvgGenImage('lib/assets/images/img_arrow_down.svg');
-
-  /// File path: lib/assets/images/img_arrow_down_black_900.svg
-  SvgGenImage get imgArrowDownBlack900 =>
-      const SvgGenImage('lib/assets/images/img_arrow_down_black_900.svg');
-
-  /// File path: lib/assets/images/img_arrow_up.svg
-  SvgGenImage get imgArrowUp =>
-      const SvgGenImage('lib/assets/images/img_arrow_up.svg');
+  /// File path: lib/assets/images/edit_button.svg
+  SvgGenImage get editButton =>
+      const SvgGenImage('lib/assets/images/edit_button.svg');
 
   /// File path: lib/assets/images/img_clock.svg
   SvgGenImage get imgClock =>
@@ -63,25 +41,9 @@ class $LibAssetsImagesGen {
   SvgGenImage get imgHome =>
       const SvgGenImage('lib/assets/images/img_home.svg');
 
-  /// File path: lib/assets/images/img_home_button.svg
-  SvgGenImage get imgHomeButton =>
-      const SvgGenImage('lib/assets/images/img_home_button.svg');
-
-  /// File path: lib/assets/images/img_lock.svg
-  SvgGenImage get imgLock =>
-      const SvgGenImage('lib/assets/images/img_lock.svg');
-
-  /// File path: lib/assets/images/img_magantaxi_logo_1.png
-  AssetGenImage get imgMagantaxiLogo1 =>
-      const AssetGenImage('lib/assets/images/img_magantaxi_logo_1.png');
-
-  /// File path: lib/assets/images/img_response_buttons.svg
-  SvgGenImage get imgResponseButtons =>
-      const SvgGenImage('lib/assets/images/img_response_buttons.svg');
-
-  /// File path: lib/assets/images/img_vector.svg
-  SvgGenImage get imgVector =>
-      const SvgGenImage('lib/assets/images/img_vector.svg');
+  /// File path: lib/assets/images/magantaxi_logo.png
+  AssetGenImage get magantaxiLogo =>
+      const AssetGenImage('lib/assets/images/magantaxi_logo.png');
 
   /// File path: lib/assets/images/new_ride_button.png
   AssetGenImage get newRideButton =>
@@ -93,16 +55,10 @@ class $LibAssetsImagesGen {
 
   /// List of all assets
   List<dynamic> get values => [
-        imgArrowDown,
-        imgArrowDownBlack900,
-        imgArrowUp,
+        editButton,
         imgClock,
         imgHome,
-        imgHomeButton,
-        imgLock,
-        imgMagantaxiLogo1,
-        imgResponseButtons,
-        imgVector,
+        magantaxiLogo,
         newRideButton,
         profileButton
       ];

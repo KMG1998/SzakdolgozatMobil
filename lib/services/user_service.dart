@@ -1,8 +1,7 @@
-
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/User.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/user.dart';
 
 import '../core/utils/service_locator.dart';
 
@@ -20,33 +19,30 @@ class UserService {
     responseType: ResponseType.json,
   ));
 
-  final _logger = Logger();
-
   UserService() {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
-      options.headers['cookie'] = 'token=${await getIt.get<FlutterSecureStorage>().read(key:'token')};';
+      options.headers['cookie'] = 'token=${await getIt.get<FlutterSecureStorage>().read(key: 'token')};';
       handler.next(options);
     }));
   }
 
-  Future<User> getUser(String uid) async {
-    var resp = await _dio.get(
-      '',
-      data: {'userId': uid},
+  Future<User> getOwnData() async {
+    final _logger = Logger();
+    final resp = await _dio.get(
+      '/getOwnData',
     );
-    return User.fromJson(resp.data as Map<String, dynamic>);
+    return User.fromJson(resp.data);
   }
 
   Future<bool> createPassenger(String email, String password, String name) async {
-      var resp = await _dio.post('/signUpPassenger',
-          data: {'email': email, 'password': password, 'name': name},
-          options: Options(responseType: ResponseType.json));
-      return resp.statusCode == 200;
+    final resp = await _dio.post('/signUpPassenger',
+        data: {'email': email, 'password': password, 'name': name}, options: Options(responseType: ResponseType.json));
+    return resp.statusCode == 200;
   }
 
   Future<bool> logUserIn(String email, String password) async {
-    var resp = await _dio.post(
+    final resp = await _dio.post(
       '/signInPassenger',
       data: {
         'email': email,
@@ -59,7 +55,7 @@ class UserService {
   }
 
   Future<bool> resetPassword(String email) async {
-    var resp = await _dio.post(
+    final resp = await _dio.post(
       '/resetPassword',
       data: {
         'userEmail': email,
@@ -69,5 +65,16 @@ class UserService {
       return true;
     }
     return false;
+  }
+
+  Future<bool> checkToken() async {
+    try {
+      final resp = await _dio.get(
+        '/checkToken',
+      );
+      return resp.statusCode == 200;
+    } catch (e) {
+      return false;
+    }
   }
 }

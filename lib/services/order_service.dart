@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/Order.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/order.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/offer_response.dart';
 
 class OrderService {
@@ -58,7 +58,6 @@ class OrderService {
   Future<List<Order>?> getHistory() async{
     final resp = await _dio.get('/getPassengerHistory');
     if(resp.statusCode == 200){
-      _logger.d(jsonDecode(resp.data)["history"]);
       return (jsonDecode(resp.data)["history"] as List).map((e) => Order.fromJson(e)).toList();
     }
     return null;

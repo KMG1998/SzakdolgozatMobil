@@ -8,7 +8,7 @@ class CustomButtonStyles {
   static ButtonStyle get outlineBlack => OutlinedButton.styleFrom(
     backgroundColor: theme.colorScheme.onSecondaryContainer,
     side: BorderSide(
-      color: appTheme.black900,
+      color: appTheme.black,
       width: 2,
     ),
     shape: RoundedRectangleBorder(

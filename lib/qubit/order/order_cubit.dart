@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -10,7 +9,7 @@ import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/popups/order_review_dialog.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/StreamData.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/stream_data.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/order_review.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/vehicle_data.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/order_service.dart';

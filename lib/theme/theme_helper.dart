@@ -51,7 +51,7 @@ class ThemeHelper {
         style: OutlinedButton.styleFrom(
           backgroundColor: Colors.transparent,
           side: BorderSide(
-            color: appTheme.black900,
+            color: appTheme.black,
             width: 2.h,
           ),
           shape: RoundedRectangleBorder(
@@ -64,22 +64,10 @@ class ThemeHelper {
           padding: EdgeInsets.zero,
         ),
       ),
-      radioTheme: RadioThemeData(
-        fillColor: WidgetStateColor.resolveWith((states) {
-          if (states.contains(WidgetState.selected)) {
-            return appTheme.blueGray100;
-          }
-          return colorScheme.onSurface;
-        }),
-        visualDensity: const VisualDensity(
-          vertical: -4,
-          horizontal: -4,
-        ),
-      ),
       dividerTheme: DividerThemeData(
         thickness: 1,
         space: 1,
-        color: appTheme.black900,
+        color: appTheme.black,
       ),
     );
   }
@@ -95,25 +83,25 @@ class ThemeHelper {
 class TextThemes {
   static TextTheme textTheme(ColorScheme colorScheme) => TextTheme(
     bodyMedium: TextStyle(
-      color: appTheme.black900,
+      color: appTheme.black,
       fontSize: 14.sp,
       fontFamily: 'JetBrains Mono',
       fontWeight: FontWeight.w400,
     ),
     headlineLarge: TextStyle(
-      color: appTheme.black900,
+      color: appTheme.black,
       fontSize: 30.sp,
       fontFamily: 'JetBrains Mono',
       fontWeight: FontWeight.w400,
     ),
     headlineSmall: TextStyle(
-      color: appTheme.black900,
+      color: appTheme.black,
       fontSize: 25.sp,
       fontFamily: 'JetBrains Mono',
       fontWeight: FontWeight.w400,
     ),
     titleLarge: TextStyle(
-      color: appTheme.black900,
+      color: appTheme.black,
       fontSize: 20.sp,
       fontFamily: 'JetBrains Mono',
       fontWeight: FontWeight.w400,
@@ -137,14 +125,11 @@ class ColorSchemes {
 /// Class containing custom colors for a primary theme.
 class PrimaryColors {
   // Black
-  Color get black900 => Color(0XFF000000);
+  Color get black => Color(0XFF000000);
 
   // Blue
   Color get blue100 => Color(0XFFC9E1F9);
   Color get blue10001 => Color(0XFFB2D8FF);
-
-  // BlueGray
-  Color get blueGray100 => Color(0XFFD9D9D9);
 }
 
 PrimaryColors get appTheme => ThemeHelper().themeColor();

@@ -5,7 +5,6 @@ import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 
-import '../../models/User.dart';
 
 part 'auth_state.dart';
 
@@ -41,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  resetPassword({required String email}) async {
+  Future<void> resetPassword({required String email}) async {
     emit(PasswordResetInProgress());
     try {
       final success = await getIt.get<UserService>().resetPassword(email);
