@@ -19,6 +19,8 @@ class UserService {
     responseType: ResponseType.json,
   ));
 
+  final _logger = Logger();
+
   UserService() {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
@@ -28,7 +30,6 @@ class UserService {
   }
 
   Future<User> getOwnData() async {
-    final _logger = Logger();
     final resp = await _dio.get(
       '/getOwnData',
     );
@@ -74,6 +75,36 @@ class UserService {
       );
       return resp.statusCode == 200;
     } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> logOut() async {
+    try {
+      final resp = await _dio.post(
+        '/logOut',
+      );
+      return resp.statusCode == 200;
+    } catch (e) {
+      _logger.e(e);
+      return false;
+    }
+  }
+
+  Future<bool> changePassword({required String currentPassword, required String newPassword}) async{
+    try{
+    final resp = await _dio.post(
+      '/changePassword',
+      data: {
+        'currentPass': currentPassword,
+        'newPass': newPassword,
+      },
+    );
+    if (resp.statusCode == 200) {
+      return true;
+    }
+    return false;}catch(e){
+      _logger.e(e);
       return false;
     }
   }

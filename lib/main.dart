@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:szakdolgozat_magantaxi_mobil/pages/dashboard/passenger_dashboard_page.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/splash/splash_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/reviewList/review_list_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/user/user_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => OrderCubit()),
             BlocProvider(create: (context) => UserCubit()),
             BlocProvider(create: (context) => HistoryCubit()),
+            BlocProvider(create: (context) => ReviewListCubit()),
           ],
           child: MaterialApp(
               theme: theme,

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/order_review.dart';
 
 class ReviewService{
   final _dio = Dio(BaseOptions(
@@ -29,7 +32,14 @@ class ReviewService{
 
   Future<bool> createReview({required double score, String? reviewText}) async{
     final resp = await _dio.post('/create',data: {'score':score,'reviewText':reviewText});
-    _logger.d(resp.statusCode);
     return resp.statusCode == 200;
+  }
+
+  Future<List<OrderReview>?> getReceivedReviews() async {
+    final resp = await _dio.get('/getReceived');
+    if(resp.statusCode == 200){
+      return (jsonDecode(resp.data) as List).map((e) => OrderReview.fromJson(e)).toList();
+    }
+    return null;
   }
 }

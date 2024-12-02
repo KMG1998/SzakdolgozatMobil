@@ -94,12 +94,6 @@ class TextThemes {
       fontFamily: 'JetBrains Mono',
       fontWeight: FontWeight.w400,
     ),
-    headlineSmall: TextStyle(
-      color: appTheme.black,
-      fontSize: 25.sp,
-      fontFamily: 'JetBrains Mono',
-      fontWeight: FontWeight.w400,
-    ),
     titleLarge: TextStyle(
       color: appTheme.black,
       fontSize: 20.sp,

@@ -1,9 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
+import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 
@@ -29,6 +30,7 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        
         extendBody: true,
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,

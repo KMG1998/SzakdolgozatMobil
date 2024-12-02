@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_state.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/order_service.dart';
 

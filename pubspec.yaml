@@ -40,10 +40,13 @@ dev_dependencies:
   flutter_gen_runner:
 
 flutter_gen:
-  generate-assets: false
   output: lib/generated
   integrations:
     flutter_svg: true
+  assets:
+    exclude:
+      - lib/generated/assets.gen.dart
+      - lib/generated/fonts.gen.dart
 
 flutter:
   uses-material-design: true

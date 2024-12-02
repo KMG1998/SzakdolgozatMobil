@@ -6,7 +6,6 @@ class Assets {
   static const String authAuthState = 'lib/qubit/auth/auth_state.dart';
   static const String authLoginScreen = 'lib/pages/auth/login_screen.dart';
   static const String authRegistrationPassengerScreen = 'lib/pages/auth/registration_passenger_screen.dart';
-  static const String coreAppExport = 'lib/core/app_export.dart';
   static const String coreEnums = 'lib/core/enums.dart';
   static const String dashboardPassengerDashboardPage = 'lib/pages/dashboard/passenger_dashboard_page.dart';
   static const String fontsJetBrainsMonoRomanRegular = 'lib/assets/fonts/JetBrainsMonoRomanRegular.ttf';
@@ -18,6 +17,7 @@ class Assets {
   static const String imagesEditButton = 'lib/assets/images/edit_button.svg';
   static const String imagesImgClock = 'lib/assets/images/img_clock.svg';
   static const String imagesImgHome = 'lib/assets/images/img_home.svg';
+  static const String imagesLogOut = 'lib/assets/images/log_out.svg';
   static const String imagesMagantaxiLogo = 'lib/assets/images/magantaxi_logo.png';
   static const String imagesNewRideButton = 'lib/assets/images/new_ride_button.png';
   static const String imagesProfileButton = 'lib/assets/images/profile_button.svg';
@@ -30,9 +30,13 @@ class Assets {
   static const String modelsVehicleData = 'lib/models/vehicle_data.dart';
   static const String orderOrderCubit = 'lib/qubit/order/order_cubit.dart';
   static const String orderOrderState = 'lib/qubit/order/order_state.dart';
+  static const String popupsChangePasswordDialog = 'lib/core/popups/change_password_dialog.dart';
   static const String popupsForgotPasswordDialog = 'lib/core/popups/forgot_password_dialog.dart';
   static const String popupsOrderReviewDialog = 'lib/core/popups/order_review_dialog.dart';
   static const String profilePassengerProfilePage = 'lib/pages/profile/passenger_profile_page.dart';
+  static const String profileReviewList = 'lib/pages/profile/received_review_list.dart';
+  static const String reviewListReviewListCubit = 'lib/qubit/reviewList/review_list_cubit.dart';
+  static const String reviewListReviewListState = 'lib/qubit/reviewList/review_list_state.dart';
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
   static const String servicesOrderService = 'lib/services/order_service.dart';
   static const String servicesReviewService = 'lib/services/review_service.dart';

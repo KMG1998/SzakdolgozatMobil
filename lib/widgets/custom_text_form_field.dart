@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
@@ -28,7 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.autoCorrect = true,
     this.enableSuggestions = true,
-    this.autovalidateMode,
+    this.autoValidateMode,
   });
 
   final double? width;
@@ -77,7 +77,7 @@ class CustomTextFormField extends StatelessWidget {
 
   final bool? enableSuggestions;
 
-  final AutovalidateMode? autovalidateMode;
+  final AutovalidateMode? autoValidateMode;
 
 
   @override
@@ -102,7 +102,7 @@ class CustomTextFormField extends StatelessWidget {
           validator: validator,
           autocorrect: autoCorrect!,
           enableSuggestions: enableSuggestions!,
-          autovalidateMode: autovalidateMode,
+          autovalidateMode: autoValidateMode,
         ),
       );
   InputDecoration get decoration => InputDecoration(
@@ -140,21 +140,5 @@ class CustomTextFormField extends StatelessWidget {
                 width: 2,
               ),
             ),
-      );
-}
-
-extension TextFormFieldStyleHelper on CustomTextFormField {
-  static UnderlineInputBorder get underLineBlack => UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: appTheme.black,
-        ),
-      );
-  static OutlineInputBorder get outlineBlackTL20 => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20.h),
-        borderSide: BorderSide.none,
-      );
-  static OutlineInputBorder get fillPrimary => OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20.h),
-        borderSide: BorderSide.none,
       );
 }

@@ -41,6 +41,9 @@ class $LibAssetsImagesGen {
   SvgGenImage get imgHome =>
       const SvgGenImage('lib/assets/images/img_home.svg');
 
+  /// File path: lib/assets/images/log_out.svg
+  SvgGenImage get logOut => const SvgGenImage('lib/assets/images/log_out.svg');
+
   /// File path: lib/assets/images/magantaxi_logo.png
   AssetGenImage get magantaxiLogo =>
       const AssetGenImage('lib/assets/images/magantaxi_logo.png');
@@ -58,6 +61,7 @@ class $LibAssetsImagesGen {
         editButton,
         imgClock,
         imgHome,
+        logOut,
         magantaxiLogo,
         newRideButton,
         profileButton

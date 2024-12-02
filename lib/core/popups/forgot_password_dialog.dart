@@ -3,8 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/app_decoration.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 
@@ -63,7 +65,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
         children: [
           Text(
             'Elfelejtett jelszó',
-            style: theme.textTheme.titleLarge,
+            style: theme.textTheme.headlineLarge,
           ),
           SizedBox(height: 20),
           Text(
@@ -87,9 +89,9 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
           CustomOutlinedButton(
               text: 'Jelszó visszaállítása',
               buttonTextStyle: theme.textTheme.titleLarge,
-              onPressed: () async {
+              onPressed: () {
                 if (widget._formKey.currentState!.validate()) {
-                  await context.read<AuthCubit>().resetPassword(email: widget._emailFieldController.text);
+                  context.read<AuthCubit>().resetPassword(email: widget._emailFieldController.text);
                 }
               }),
         ],

@@ -1,8 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/user.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 

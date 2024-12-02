@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
+import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_image_view.dart';
@@ -17,10 +18,9 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   checkToken() async {
     final tokenValid = await getIt.get<UserService>().checkToken();
-    if(tokenValid){
+    if (tokenValid) {
       navigatorKey.currentState!.pushReplacementNamed(AppRoutes.passengerDashboardPage);
       return;
     }
@@ -40,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
       canPop: false,
       child: SafeArea(
           child: Scaffold(
+        
         extendBody: true,
         extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,

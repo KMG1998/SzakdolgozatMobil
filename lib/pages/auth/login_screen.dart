@@ -3,10 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/popups/forgot_password_dialog.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_image_view.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
 
@@ -161,8 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
             text: "Belépés",
             buttonStyle: CustomButtonStyles.outlineBlack,
             buttonTextStyle: theme.textTheme.bodyLarge!,
-            onPressed: () async {
-              await context.read<AuthCubit>().login();
+            onPressed: () {
+              context.read<AuthCubit>().login();
             },
           );
         } else {

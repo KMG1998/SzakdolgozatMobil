@@ -5,6 +5,7 @@ import 'package:szakdolgozat_magantaxi_mobil/pages/dashboard/passenger_dashboard
 import 'package:szakdolgozat_magantaxi_mobil/pages/history/history_order_details_page.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/history/passenger_history_page.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/profile/passenger_profile_page.dart';
+import 'package:szakdolgozat_magantaxi_mobil/pages/profile/received_review_list.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/splash/splash_screen.dart';
 
 class AppRoutes {
@@ -15,6 +16,7 @@ class AppRoutes {
   static const String historyOrderDetailsPage = '/history_order_details_page';
   static const String loginScreen = '/login_screen';
   static const String splashScreen = '/splash_screen';
+  static const String receivedReviews = '/received_reviews';
 
   static Map<String, WidgetBuilder> routes = {
     registrationPassengerScreen: (context) => const RegistrationPassengerScreen(),
@@ -24,5 +26,6 @@ class AppRoutes {
     passengerProfilePage: (context) => PassengerProfilePage(),
     historyOrderDetailsPage: (context) => HistoryOrderDetails(),
     splashScreen: (context) => SplashScreen(),
+    receivedReviews: (context) => ReceivedReviewList(),
   };
 }

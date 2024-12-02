@@ -5,9 +5,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_image_view.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_nav_bar.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart';
@@ -34,18 +37,12 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
   }
 
   @override
-  void dispose() {
-    personNumController.dispose();
-    destinationAddressController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
       child: SafeArea(
         child: Scaffold(
+            
             extendBody: true,
             extendBodyBehindAppBar: true,
             backgroundColor: Colors.transparent,
@@ -141,6 +138,13 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
             bottomNavigationBar: CustomNavBar(activeNum: 1)),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    personNumController.dispose();
+    destinationAddressController.dispose();
+    super.dispose();
   }
 
   Widget _buildPassengerDashboard(BuildContext context) {

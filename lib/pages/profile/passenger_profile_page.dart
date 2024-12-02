@@ -3,10 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/core/app_export.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/popups/change_password_dialog.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/user/user_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/app_decoration.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';
+import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_nav_bar.dart';
+import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_outlined_button.dart';
 
 class PassengerProfilePage extends StatefulWidget {
   const PassengerProfilePage({super.key});
@@ -48,24 +55,79 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
                   context.read<UserCubit>().getUserData();
                 }
                 if (state is UserLoaded) {
-                  return Container(
-                    width: 550.w,
-                    height: 200,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadiusStyle.roundedBorder20,
-                    ),
+                  return SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        _profileHeadline(onPressed: () {
-                          setState(() {
-                            _isEditing = true;
-                          });
+                        Container(
+                          width: 550.w,
+                          height: 200.h,
+                          padding: EdgeInsets.all(10),
+                          margin: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadiusStyle.roundedBorder20,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _profileHeadline(onPressed: () {
+                                setState(() {
+                                  _isEditing = true;
+                                });
+                              }),
+                              SizedBox(height: 20),
+                              Text(
+                                'e-mail: ${state.userData.email}',
+                                style: theme.textTheme.titleLarge,
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'név: ${state.userData.name}',
+                                style: theme.textTheme.titleLarge,
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 50),
+                        _createButton(
+                            text: 'jelszó megváltoztatása',
+                            onPressed: () async {
+                              await showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (ctx) => ChangePasswordDialog());
+                            }),
+                        _createButton(text: 'értékelések megtekintése', onPressed: () {
+                          Navigator.pushNamed(context, AppRoutes.receivedReviews);
                         }),
-                        Text('e-mail: ${state.userData.email}'),
-                        Text('név: ${state.userData.name}'),
+                        SizedBox(height: 50),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(40),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.4),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                              ),
+                            ],
+                          ),
+                          child: IconButton(
+                            onPressed: () {
+                              context.read<AuthCubit>().logOut();
+                            },
+                            icon: Assets.lib.assets.images.logOut.svg(),
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Kijelentkezés',
+                          style: theme.textTheme.titleLarge,
+                        )
                       ],
                     ),
                   );
@@ -117,6 +179,18 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
           )
         ],
       ),
+    );
+  }
+
+  Widget _createButton({required String text, required void Function() onPressed}) {
+    return CustomOutlinedButton(
+      text: text,
+      buttonStyle: CustomButtonStyles.outlineBlack,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      buttonTextStyle: theme.textTheme.headlineLarge!.copyWith(
+        decoration: TextDecoration.underline,
+      ),
+      onPressed: onPressed,
     );
   }
 }

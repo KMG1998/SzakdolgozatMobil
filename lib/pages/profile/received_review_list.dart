@@ -1,36 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:loading_indicator/loading_indicator.dart';
-import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_cubit.dart';
-import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_state.dart';
-import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/reviewList/review_list_cubit.dart';
+import 'package:szakdolgozat_magantaxi_mobil/qubit/reviewList/review_list_state.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/app_decoration.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
-import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_nav_bar.dart';
 
-class PassengerHistoryPage extends StatefulWidget {
-  const PassengerHistoryPage({super.key});
+class ReceivedReviewList extends StatefulWidget {
+  const ReceivedReviewList({super.key});
 
   @override
-  State<PassengerHistoryPage> createState() => _PassengerHistoryPageState();
+  State<ReceivedReviewList> createState() => _ReceivedReviewListState();
 }
 
-class _PassengerHistoryPageState extends State<PassengerHistoryPage> {
+class _ReceivedReviewListState extends State<ReceivedReviewList> {
   @override
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
+      onPopInvokedWithResult: (a, b) => {},
       child: SafeArea(
         child: Scaffold(
           extendBody: true,
           extendBodyBehindAppBar: true,
-          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              icon: Icon(Icons.arrow_back),
+            ),
+          ),
           body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            padding: EdgeInsets.symmetric(vertical: 50, horizontal: 10),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: const Alignment(0.5, 0),
@@ -42,15 +48,15 @@ class _PassengerHistoryPageState extends State<PassengerHistoryPage> {
                 ],
               ),
             ),
-            child: BlocBuilder<HistoryCubit, HistoryState>(
+            child: BlocBuilder<ReviewListCubit, ReviewListState>(
               builder: (context, state) {
-                if (state is HistoryInit) {
-                  context.read<HistoryCubit>().getHistory();
+                if (state is ReviewListInit) {
+                  context.read<ReviewListCubit>().getReviews();
                 }
-                if (state is HistoryLoaded) {
+                if (state is ReviewListLoaded) {
                   return RefreshIndicator(
                     onRefresh: () async {
-                      context.read<HistoryCubit>().reset();
+                      context.read<ReviewListCubit>().reset();
                     },
                     color: Colors.black,
                     child: Column(
@@ -68,13 +74,13 @@ class _PassengerHistoryPageState extends State<PassengerHistoryPage> {
                             ),
                           ),
                           child: Text(
-                            'Korábbi foglalások',
+                            'Kapott értékeléseid',
                             style: theme.textTheme.headlineLarge,
                             textAlign: TextAlign.center,
                           ),
                         ),
                         Container(
-                          height: 750.h,
+                          height: 730.h,
                           padding: EdgeInsets.all(5),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -84,26 +90,16 @@ class _PassengerHistoryPageState extends State<PassengerHistoryPage> {
                           child: ListView.builder(
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemCount: state.orders.length,
+                            itemCount: state.reviews.length,
                             itemBuilder: (BuildContext context, int index) {
+                              final currentReview = state.reviews[index];
                               return Card(
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(width: 2),
                                   borderRadius: BorderRadiusStyle.roundedBorder20,
                                 ),
                                 child: ListTile(
-                                  title: Text(
-                                    DateFormat('yyyy-MM-dd – HH:mm:ss')
-                                        .format(DateTime.parse(state.orders[index].finishDateTime)),
-                                    style: theme.textTheme.titleMedium,
-                                  ),
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.arrow_right_alt),
-                                    onPressed: () {
-                                      context.read<HistoryCubit>().selectOrder(index);
-                                      Navigator.pushNamed(context, AppRoutes.historyOrderDetailsPage);
-                                    },
-                                  ),
+                                  title: _createItem(currentReview.score, currentReview.reviewText),
                                 ),
                               );
                             },
@@ -126,8 +122,30 @@ class _PassengerHistoryPageState extends State<PassengerHistoryPage> {
               },
             ),
           ),
-          bottomNavigationBar: CustomNavBar(activeNum: 0),
         ),
+      ),
+    );
+  }
+
+  Widget _createItem(double score, String text) {
+    return Container(
+      height: 50,
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            score.toString(),
+            style: theme.textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 10),
+          Text(
+            text,
+            style: theme.textTheme.titleLarge,
+            textAlign: TextAlign.center,
+          ),
+        ],
       ),
     );
   }
