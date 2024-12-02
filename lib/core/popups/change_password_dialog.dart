@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
@@ -45,14 +45,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
               );
             }
             if (state is PasswordChangeFail) {
-              Fluttertoast.showToast(
-                  msg: "Sikertelen művelet!",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              ToastWrapper.showErrorToast(message: "Sikertelen művelet!");
             }
             return _changePasswordForm();
           },
@@ -115,7 +108,7 @@ class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
                     buttonStyle: CustomButtonStyles.outlineGreen,
                     onPressed: () {
                       if (widget._newPasswordController.text != widget._againPasswordController.text) {
-                        Fluttertoast.showToast(msg: 'Különböző új jelszó és ismétlés');
+                        ToastWrapper.showErrorToast(message: 'Különböző új jelszó és ismétlés');
                         return;
                       }
                       if (widget._formKey.currentState!.validate()) {

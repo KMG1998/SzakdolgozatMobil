@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
-import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/order/order_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
@@ -216,14 +215,14 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
               onTap: () async {
                 _requestLocationPermission();
                 if (await Permission.location.isDenied) {
-                  Fluttertoast.showToast(msg: 'Kérjük, engedélyezze és kapcsolja be a GPS-t!');
+                  ToastWrapper.showErrorToast(message: 'Kérjük, engedélyezze és kapcsolja be a GPS-t!');
                   return;
                 }
                 if (destinationLocation == null) {
-                  Fluttertoast.showToast(msg: 'Kérjük, válasszon uticélt!');
+                  ToastWrapper.showErrorToast(message:'Kérjük, válasszon uticélt!');
                 }
                 if (personNumController.text.isEmpty) {
-                  Fluttertoast.showToast(msg: 'Kérjük, adja meg a személyek számát!');
+                  ToastWrapper.showErrorToast(message:'Kérjük, adja meg a személyek számát!');
                 }
                 context.read<OrderCubit>().getOffer(destinationLocation!, int.parse(personNumController.text));
               },

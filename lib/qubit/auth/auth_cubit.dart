@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
@@ -82,6 +82,6 @@ class AuthCubit extends Cubit<AuthState> {
       await secureStorage.delete(key: 'roomId');
       return;
     }
-    Fluttertoast.showToast(msg: 'Sikertelen kijelentkezés');
+    ToastWrapper.showErrorToast(message: 'Sikertelen kijelentkezés');
   }
 }

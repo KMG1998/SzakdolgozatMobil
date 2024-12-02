@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:no_screenshot/no_screenshot.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';

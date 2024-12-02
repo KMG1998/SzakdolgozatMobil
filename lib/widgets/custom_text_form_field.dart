@@ -28,7 +28,7 @@ class CustomTextFormField extends StatelessWidget {
     this.validator,
     this.autoCorrect = true,
     this.enableSuggestions = true,
-    this.autoValidateMode,
+    this.autoValidateMode = AutovalidateMode.onUserInteraction,
   });
 
   final double? width;

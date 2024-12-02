@@ -34,7 +34,7 @@ class Assets {
   static const String popupsForgotPasswordDialog = 'lib/core/popups/forgot_password_dialog.dart';
   static const String popupsOrderReviewDialog = 'lib/core/popups/order_review_dialog.dart';
   static const String profilePassengerProfilePage = 'lib/pages/profile/passenger_profile_page.dart';
-  static const String profileReviewList = 'lib/pages/profile/received_review_list.dart';
+  static const String profileReceivedReviewList = 'lib/pages/profile/received_review_list.dart';
   static const String reviewListReviewListCubit = 'lib/qubit/reviewList/review_list_cubit.dart';
   static const String reviewListReviewListState = 'lib/qubit/reviewList/review_list_state.dart';
   static const String routesAppRoutes = 'lib/routes/app_routes.dart';
@@ -54,6 +54,7 @@ class Assets {
   static const String utilsDateTimeUtils = 'lib/core/utils/date_time_utils.dart';
   static const String utilsNumericConstantConverter = 'lib/core/utils/numeric_constant_converter.dart';
   static const String utilsServiceLocator = 'lib/core/utils/service_locator.dart';
+  static const String utilsToastWrapper = 'lib/core/utils/toast_wrapper.dart';
   static const String utilsValidators = 'lib/core/utils/validators.dart';
   static const String widgetsBaseButton = 'lib/widgets/base_button.dart';
   static const String widgetsCustomImageView = 'lib/widgets/custom_image_view.dart';

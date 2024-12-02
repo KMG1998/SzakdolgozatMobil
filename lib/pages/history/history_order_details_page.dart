@@ -8,7 +8,7 @@ import 'package:szakdolgozat_magantaxi_mobil/theme/app_decoration.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/theme_helper.dart';
 
 class HistoryOrderDetails extends StatelessWidget {
-  HistoryOrderDetails({super.key});
+  const HistoryOrderDetails({super.key});
 
   @override
   Widget build(BuildContext context) {

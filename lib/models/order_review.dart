@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 class OrderReview {
   final double score;
   final String reviewText;

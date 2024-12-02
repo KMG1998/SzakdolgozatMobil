@@ -12,4 +12,11 @@ class Validators{
     }
     return password!.length >= 8 ? null : "Legalább 8 karakter hosszúnak kell lennie";
   }
+
+  static String? nameValidator(String? name){
+    if(name?.isEmpty ?? true){
+      return "Kötelező mező";
+    }
+    return name!.length >= 3 ? null : "Legalább 3 karakter hosszúnak kell lennie";
+  }
 }

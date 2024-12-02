@@ -91,19 +91,32 @@ class UserService {
     }
   }
 
-  Future<bool> changePassword({required String currentPassword, required String newPassword}) async{
-    try{
-    final resp = await _dio.post(
-      '/changePassword',
-      data: {
-        'currentPass': currentPassword,
-        'newPass': newPassword,
-      },
-    );
-    if (resp.statusCode == 200) {
-      return true;
+  Future<bool> changePassword({required String currentPassword, required String newPassword}) async {
+    try {
+      final resp = await _dio.post(
+        '/changePassword',
+        data: {
+          'currentPass': currentPassword,
+          'newPass': newPassword,
+        },
+      );
+      return resp.statusCode == 200;
+    } catch (e) {
+      _logger.e(e);
+      return false;
     }
-    return false;}catch(e){
+  }
+
+  Future<bool> changeName(String newName) async {
+    try {
+      final resp = await _dio.post(
+        '/changeName',
+        data: {
+          'newName': newName,
+        },
+      );
+      return resp.statusCode == 200;
+    } catch (e) {
       _logger.e(e);
       return false;
     }

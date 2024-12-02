@@ -11,12 +11,6 @@ class OrderInit extends OrderState{
 
 class OrderLoading extends OrderState {}
 
-class OrderError extends OrderState {
-  final String errorMessage;
-
-  OrderError({required this.errorMessage});
-}
-
 class OrderLoaded extends OrderState {
   final VehicleData vehicleData;
   final Position currentPassengerPos;

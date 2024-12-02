@@ -22,7 +22,7 @@ class CustomButtonStyles {
       width: 2,
     ),
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(14.h),
+      borderRadius: BorderRadius.circular(20.h),
     ),
   );
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:loading_indicator/loading_indicator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/app_decoration.dart';
@@ -41,14 +41,7 @@ class _ForgotPasswordDialogState extends State<ForgotPasswordDialog> {
               );
             }
             if (state is PasswordResetFail) {
-              Fluttertoast.showToast(
-                  msg: "Sikertelen művelet!",
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.red,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
+              ToastWrapper.showErrorToast(message: "Sikertelen művelet!");
             }
             return state is PasswordResetSuccess ? _successContent() : _resetForm();
           },
