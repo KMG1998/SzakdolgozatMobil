@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_indicator/loading_indicator.dart';
@@ -16,7 +17,9 @@ import 'package:szakdolgozat_magantaxi_mobil/widgets/custom_text_form_field.dart
 import 'package:szakdolgozat_magantaxi_mobil/widgets/map_widget.dart';
 
 class PassengerDashboardPage extends StatefulWidget {
-  const PassengerDashboardPage({super.key});
+  PassengerDashboardPage({super.key});
+
+  final TextEditingController personNumController = TextEditingController();
 
   @override
   State<PassengerDashboardPage> createState() => _PassengerDashboardPageState();
@@ -24,15 +27,12 @@ class PassengerDashboardPage extends StatefulWidget {
 
 class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
   Location? destinationLocation;
-  late TextEditingController personNumController;
-  late TextEditingController destinationAddressController;
+  String? destinationAddress;
 
   @override
   void initState() {
     super.initState();
     _requestLocationPermission();
-    personNumController = TextEditingController();
-    destinationAddressController = TextEditingController();
   }
 
   @override
@@ -41,97 +41,98 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
       canPop: false,
       child: SafeArea(
         child: Scaffold(
-            
             extendBody: true,
             extendBodyBehindAppBar: true,
             backgroundColor: Colors.transparent,
-            body: SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: const Alignment(0.5, 0),
-                    end: const Alignment(0.5, 1),
-                    colors: [
-                      theme.colorScheme.primaryContainer,
-                      appTheme.blue100,
-                      theme.colorScheme.onSecondaryContainer,
-                    ],
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: BlocBuilder<OrderCubit, OrderState>(
-                        builder: (context, state) {
-                          if (state is OrderLoading) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: LoadingIndicator(
-                                  indicatorType: Indicator.ballClipRotatePulse,
-                                ),
-                              ),
-                            );
-                          }
-                          if (state is OrderLoaded) {
-                            return Padding(
-                              padding: EdgeInsets.only(bottom: 5.w, top: 5.h),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    color: Colors.white,
-                                    padding: EdgeInsets.all(10),
-                                    width: 550.w,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Sofőr átlaga: ${state.vehicleData.reviewAvg?.toStringAsFixed(2)}',
-                                          style: theme.textTheme.titleLarge,
-                                        ),
-                                        Text(
-                                          'Jármű színe: ${state.vehicleData.vehicleColor}',
-                                          style: theme.textTheme.titleLarge,
-                                        ),
-                                        Text(
-                                          'Jármű Típusa: ${state.vehicleData.vehicleType}',
-                                          style: theme.textTheme.titleLarge,
-                                        ),
-                                        Text(
-                                          'Jármű rendszáma: ${state.vehicleData.vehiclePlate}',
-                                          style: theme.textTheme.titleLarge,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  MapWidget(initialPos: state.currentPassengerPos),
-                                  SizedBox(height: 20),
-                                  CustomOutlinedButton(
-                                    text: 'Mégse',
-                                    buttonStyle: CustomButtonStyles.outlineRed,
-                                    onPressed: () {
-                                      destinationLocation = null;
-                                      destinationAddressController.text = '';
-                                      context.read<OrderCubit>().cancelRide();
-                                    },
-                                  )
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Center(child: _buildPassengerDashboard(context));
-                          }
-                        },
-                      ),
-                    ),
+            body: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: const Alignment(0.5, 0),
+                  end: const Alignment(0.5, 1),
+                  colors: [
+                    theme.colorScheme.primaryContainer,
+                    appTheme.blue100,
+                    theme.colorScheme.onSecondaryContainer,
                   ],
                 ),
+              ),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: BlocBuilder<OrderCubit, OrderState>(
+                      builder: (context, state) {
+                        if(state is OrderInit){
+                          context.read<OrderCubit>().initState();
+                        }
+                        if (state is OrderLoaded) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 5.w, top: 5.h),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  color: Colors.white,
+                                  padding: EdgeInsets.all(10),
+                                  width: 550.w,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Sofőr átlaga: ${state.vehicleData.reviewAvg?.toStringAsFixed(2)}',
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                      Text(
+                                        'Jármű színe: ${state.vehicleData.vehicleColor}',
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                      Text(
+                                        'Jármű Típusa: ${state.vehicleData.vehicleType}',
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                      Text(
+                                        'Jármű rendszáma: ${state.vehicleData.vehiclePlate}',
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                MapWidget(initialPos: state.currentPassengerPos),
+                                SizedBox(height: 20),
+                                state.passengerPickedUp
+                                    ? SizedBox()
+                                    : CustomOutlinedButton(
+                                        text: 'Mégse',
+                                        buttonStyle: CustomButtonStyles.outlineRed,
+                                        onPressed: () {
+                                          destinationLocation = null;
+                                          destinationAddress = '';
+                                          context.read<OrderCubit>().cancelRide();
+                                        },
+                                      )
+                              ],
+                            ),
+                          );
+                        }
+                        if(state is OrderWaiting){
+                          return Center(child: _buildPassengerDashboard(context));
+                        }
+                        return Center(
+                          child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: LoadingIndicator(
+                              indicatorType: Indicator.ballClipRotatePulse,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             bottomNavigationBar: CustomNavBar(activeNum: 1)),
@@ -141,8 +142,6 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
 
   @override
   void dispose() {
-    personNumController.dispose();
-    destinationAddressController.dispose();
     super.dispose();
   }
 
@@ -150,6 +149,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
     return Padding(
       padding: EdgeInsets.only(bottom: 5.w),
       child: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Column(
           children: [
             destinationLocation == null
@@ -161,7 +161,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                       language: 'hu',
                       compassEnabled: false,
                       indoorViewEnabled: false,
-                      searchHintText: 'Uticél keresése',
+                      searchHintText: 'Úticél keresése',
                       rotateGesturesEnabled: false,
                       scrollGesturesEnabled: false,
                       tiltGesturesEnabled: false,
@@ -170,7 +170,9 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                       hideMapTypeButton: true,
                       hideMoreOptions: true,
                       mapToolbarEnabled: false,
-                      searchController: destinationAddressController,
+                      onSuggestionSelected: (response) => {
+                        if (response != null) {destinationAddress = response.result.formattedAddress}
+                      },
                       onNext: (geoRes) => {
                         setState(() {
                           destinationLocation = geoRes?.geometry.location;
@@ -185,18 +187,19 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 330.w,
+                          width: 500.w,
                           child: Text(
-                            'Uticél:${destinationAddressController.text}',
+                            'Úticél: $destinationAddress',
                             style: theme.textTheme.titleLarge,
                             softWrap: true,
                             overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
+                            maxLines: 3,
                           ),
                         ),
+                        Expanded(child: SizedBox()),
                         IconButton(
                             onPressed: () => setState(() {
-                                  destinationAddressController.text = '';
+                                  destinationAddress = null;
                                   destinationLocation = null;
                                 }),
                             icon: Icon(Icons.dangerous_outlined))
@@ -208,7 +211,9 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
               key: Key('personAmountInput'),
               hintText: 'Személyek száma',
               textStyle: theme.textTheme.bodyLarge,
-              controller: personNumController,
+              controller: widget.personNumController,
+              textInputAction: TextInputAction.done,
+              textInputType: TextInputType.number,
             ),
             SizedBox(height: 15),
             GestureDetector(
@@ -219,12 +224,12 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                   return;
                 }
                 if (destinationLocation == null) {
-                  ToastWrapper.showErrorToast(message:'Kérjük, válasszon uticélt!');
+                  ToastWrapper.showErrorToast(message: 'Kérjük, válasszon Úticélt!');
                 }
-                if (personNumController.text.isEmpty) {
-                  ToastWrapper.showErrorToast(message:'Kérjük, adja meg a személyek számát!');
+                if (widget.personNumController.text.isEmpty) {
+                  ToastWrapper.showErrorToast(message: 'Kérjük, adja meg a személyek számát!');
                 }
-                context.read<OrderCubit>().getOffer(destinationLocation!, int.parse(personNumController.text));
+                context.read<OrderCubit>().getOffer(destinationLocation!, int.parse(widget.personNumController.text));
               },
               child: Column(
                 children: [

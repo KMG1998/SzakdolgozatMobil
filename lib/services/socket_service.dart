@@ -2,26 +2,30 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
 import 'package:no_screenshot/no_screenshot.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/stream_data.dart';
 
 class SocketService {
-  final StreamController<StreamData> _dataStream = StreamController();
   final _socket = io(
     'http://10.0.2.2:8085',
     OptionBuilder().disableAutoConnect().setTransports(['websocket']).build(),
   );
-  final _logger = Logger();
+
+  final StreamController<LatLng> _dataStream = BehaviorSubject();
 
   final List<String> listenerNames = [
     SocketDataType.driverGeoData.name,
     SocketDataType.driverCancel.name,
     SocketDataType.finishOrder.name,
   ];
+
+  final _logger = Logger();
 
   SocketService() {
     _logger.d('create stream service');
@@ -37,12 +41,16 @@ class SocketService {
     _socket.connect();
   }
 
-  void connectToRoom(String roomId, void Function() onDriverCancel, void Function() onOrderFinish) {
+  void connectToRoom({
+    required String roomId,
+    required void Function() onDriverCancel,
+    required void Function() onOrderFinish,
+    required void Function() onPickupPassenger,
+  }) {
     _socket.emit(SocketDataType.joinRoom.name, roomId);
     _socket.on(SocketDataType.driverGeoData.name, (data) async {
       try {
-        final streamData = StreamData.fromJson(jsonDecode(data));
-        _logger.d(streamData);
+        _dataStream.add(LatLng(data[0], data[1]));
       } catch (e) {
         _logger.e(e);
       }
@@ -52,15 +60,17 @@ class SocketService {
       _socket.emit(SocketDataType.leaveRoom.name, roomId);
       disconnectRoom();
     });
+    _socket.on(SocketDataType.pickUpPassenger.name, (data) {
+      onPickupPassenger();
+    });
     _socket.on(SocketDataType.driverCancel.name, (data) {
-      _logger.e('recieved driver cancel');
       onDriverCancel();
       _socket.emit(SocketDataType.leaveRoom.name, roomId);
       disconnectRoom();
     });
   }
 
-  Stream getStream() {
+  Stream<LatLng> getStream() {
     return _dataStream.stream;
   }
 

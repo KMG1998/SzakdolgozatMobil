@@ -48,6 +48,10 @@ class OrderService {
           'personAmount': personAmount,
         },
       );
+      if(resp.data == null || resp.data!.isEmpty){
+        return null;
+      }
+      await getIt.get<FlutterSecureStorage>().write(key: 'orderData', value: resp.data);
       return resp.data!.isNotEmpty ? OfferResponse.fromJson(jsonDecode(resp.data!)) : null;
     } catch (e) {
       _logger.e(e);

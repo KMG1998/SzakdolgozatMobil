@@ -1,11 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_state.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/order_service.dart';
 
 class HistoryCubit extends Cubit<HistoryState> {
   HistoryCubit() : super((HistoryInit()));
+
+  final _logger = Logger();
 
   void getHistory() async {
     try {
@@ -17,6 +20,7 @@ class HistoryCubit extends Cubit<HistoryState> {
       }
       emit(HistoryLoaded(orders: [], errorMessage: 'Ismeretlen hiba'));
     } catch (e) {
+      _logger.d(e);
       if (e is DioException) {
         emit(HistoryLoaded(orders: [], errorMessage: e.message));
         return;

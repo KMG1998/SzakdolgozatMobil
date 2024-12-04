@@ -42,7 +42,6 @@ class Assets {
   static const String servicesReviewService = 'lib/services/review_service.dart';
   static const String servicesSocketService = 'lib/services/socket_service.dart';
   static const String servicesUserService = 'lib/services/user_service.dart';
-  static const String servicesVehicleToUserService = 'lib/services/vehicleToUserService.dart';
   static const String splashSplashScreen = 'lib/pages/splash/splash_screen.dart';
   static const String themeAppDecoration = 'lib/theme/app_decoration.dart';
   static const String themeCustomButtonStyle = 'lib/theme/custom_button_style.dart';
@@ -51,7 +50,6 @@ class Assets {
   static const String userUserCubit = 'lib/qubit/user/user_cubit.dart';
   static const String userUserState = 'lib/qubit/user/user_state.dart';
   static const String utilsDateFormatter = 'lib/core/utils/date_formatter.dart';
-  static const String utilsDateTimeUtils = 'lib/core/utils/date_time_utils.dart';
   static const String utilsNumericConstantConverter = 'lib/core/utils/numeric_constant_converter.dart';
   static const String utilsServiceLocator = 'lib/core/utils/service_locator.dart';
   static const String utilsToastWrapper = 'lib/core/utils/toast_wrapper.dart';

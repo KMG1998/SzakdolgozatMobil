@@ -37,6 +37,7 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
         child: Scaffold(
           extendBody: true,
           extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: Container(
             width: MediaQuery.of(context).size.width,
@@ -59,90 +60,88 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
                   context.read<UserCubit>().getUserData();
                 }
                 if (state is UserLoaded) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          width: 550.w,
-                          height: 230.h,
-                          padding: EdgeInsets.all(10),
-                          margin: EdgeInsets.only(bottom: 20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadiusStyle.roundedBorder20,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _isEditing
-                                  ? _profileEdit(
-                                      currentName: state.userData.name,
-                                      onSave: (newName) {
-                                        context.read<UserCubit>().changeName(newName);
-                                        setState(() {
-                                          _isEditing = false;
-                                        });
-                                      },
-                                      onCancel: () {
-                                        setState(() {
-                                          _isEditing = false;
-                                        });
-                                      })
-                                  : _profileHeadline(
-                                      email: state.userData.email,
-                                      name: state.userData.name,
-                                      onPressed: () {
-                                        setState(() {
-                                          _isEditing = true;
-                                        });
-                                      }),
-                            ],
-                          ),
+                  return Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        width: 550.w,
+                        height: 230.h,
+                        padding: EdgeInsets.all(10),
+                        margin: EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadiusStyle.roundedBorder20,
                         ),
-                        SizedBox(height: 50),
-                        _createButton(
-                            text: 'jelszó megváltoztatása',
-                            onPressed: () async {
-                              await showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (ctx) => ChangePasswordDialog());
-                            }),
-                        _createButton(
-                            text: 'értékelések megtekintése',
-                            onPressed: () {
-                              Navigator.pushNamed(context, AppRoutes.receivedReviews);
-                            }),
-                        SizedBox(height: 50),
-                        Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.4),
-                                spreadRadius: 5,
-                                blurRadius: 7,
-                              ),
-                            ],
-                          ),
-                          child: IconButton(
-                            onPressed: () {
-                              context.read<AuthCubit>().logOut();
-                            },
-                            icon: Assets.lib.assets.images.logOut.svg(),
-                          ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _isEditing
+                                ? _profileEdit(
+                                    currentName: state.userData.name,
+                                    onSave: (newName) {
+                                      context.read<UserCubit>().changeName(newName);
+                                      setState(() {
+                                        _isEditing = false;
+                                      });
+                                    },
+                                    onCancel: () {
+                                      setState(() {
+                                        _isEditing = false;
+                                      });
+                                    })
+                                : _profileHeadline(
+                                    email: state.userData.email,
+                                    name: state.userData.name,
+                                    onPressed: () {
+                                      setState(() {
+                                        _isEditing = true;
+                                      });
+                                    }),
+                          ],
                         ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Kijelentkezés',
-                          style: theme.textTheme.titleLarge,
-                        )
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: 50),
+                      _createButton(
+                          text: 'jelszó megváltoztatása',
+                          onPressed: () async {
+                            await showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (ctx) => ChangePasswordDialog());
+                          }),
+                      _createButton(
+                          text: 'értékelések megtekintése',
+                          onPressed: () {
+                            Navigator.pushNamed(context, AppRoutes.receivedReviews);
+                          }),
+                      SizedBox(height: 50),
+                      Container(
+                        padding: EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.4),
+                              spreadRadius: 5,
+                              blurRadius: 7,
+                            ),
+                          ],
+                        ),
+                        child: IconButton(
+                          onPressed: () {
+                            context.read<AuthCubit>().logOut();
+                          },
+                          icon: Assets.lib.assets.images.logOut.svg(),
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Kijelentkezés',
+                        style: theme.textTheme.titleLarge,
+                      )
+                    ],
                   );
                 }
                 if (state is UserError) {

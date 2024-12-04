@@ -3,6 +3,7 @@ enum SocketDataType{
   passengerCancel,
   driverCancel,
   finishOrder,
+  pickUpPassenger,
   joinRoom,
   leaveRoom
 }
