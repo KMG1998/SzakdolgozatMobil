@@ -1,9 +1,12 @@
 import 'package:bloc/bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/user.dart';
+import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 
 part 'user_state.dart';
@@ -34,5 +37,18 @@ class UserCubit extends Cubit<UserState> {
     }
     ToastWrapper.showErrorToast(message: 'Sikertelen mentés');
     emit(UserInit());
+  }
+
+  void lockProfile() async{
+      emit(UserLocked());
+      final success = await getIt.get<UserService>().lockProfile();
+      if(success){
+        emit(UserLocked());
+        ToastWrapper.showSuccessToast(message: 'Sikeres zárolás');
+        await navigatorKey.currentState!.pushReplacementNamed(AppRoutes.loginScreen);
+        return;
+      }
+      ToastWrapper.showErrorToast(message: 'Sikertelen zárolás');
+      emit(UserInit());
   }
 }

@@ -66,6 +66,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                       builder: (context, state) {
                         if(state is OrderInit){
                           context.read<OrderCubit>().initState();
+                          return SizedBox();
                         }
                         if (state is OrderLoaded) {
                           return Padding(
@@ -82,7 +83,7 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'Sofőr átlaga: ${state.vehicleData.reviewAvg?.toStringAsFixed(2)}',
+                                        'Sofőr átlaga: ${state.vehicleData.reviewAvg?.toStringAsFixed(2) ?? 'nincs'}',
                                         style: theme.textTheme.titleLarge,
                                       ),
                                       Text(
@@ -95,6 +96,10 @@ class _PassengerDashboardPageState extends State<PassengerDashboardPage> {
                                       ),
                                       Text(
                                         'Jármű rendszáma: ${state.vehicleData.vehiclePlate}',
+                                        style: theme.textTheme.titleLarge,
+                                      ),
+                                      Text(
+                                        'Fuvar ára: ${state.price} Ft',
                                         style: theme.textTheme.titleLarge,
                                       ),
                                     ],

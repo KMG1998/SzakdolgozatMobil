@@ -17,6 +17,7 @@ class OrderLoaded extends OrderState {
   final VehicleData vehicleData;
   final Position currentPassengerPos;
   final List<PointLatLng> currentRoute;
+  final int price;
   final bool passengerPickedUp;
 
   OrderLoaded({
@@ -24,6 +25,7 @@ class OrderLoaded extends OrderState {
     required this.currentRoute,
     required this.vehicleData,
     required this.passengerPickedUp,
+    required this.price,
   });
 
   OrderLoaded copyWith({
@@ -31,12 +33,14 @@ class OrderLoaded extends OrderState {
     Position? currentPassengerPos,
     List<PointLatLng>? currentRoute,
     bool? passengerPickedUp,
+    int? price
   }) {
     return OrderLoaded(
       currentPassengerPos: currentPassengerPos ?? this.currentPassengerPos,
       currentRoute: currentRoute ?? this.currentRoute,
       vehicleData: vehicleData ?? this.vehicleData,
       passengerPickedUp: passengerPickedUp ?? this.passengerPickedUp,
+      price: price ?? this.price,
     );
   }
 }

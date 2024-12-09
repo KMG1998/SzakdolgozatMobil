@@ -37,9 +37,14 @@ class UserService {
   }
 
   Future<bool> createPassenger(String email, String password, String name) async {
-    final resp = await _dio.post('/signUpPassenger',
-        data: {'email': email, 'password': password, 'name': name}, options: Options(responseType: ResponseType.json));
-    return resp.statusCode == 200;
+    try {
+      final resp = await _dio.post('/signUpPassenger',
+          data: {'email': email, 'password': password, 'name': name},
+          options: Options(responseType: ResponseType.json));
+      return resp.statusCode == 200;
+    }catch (e){
+      return false;
+    }
   }
 
   Future<bool> logUserIn(String email, String password) async {
@@ -114,6 +119,18 @@ class UserService {
         data: {
           'newName': newName,
         },
+      );
+      return resp.statusCode == 200;
+    } catch (e) {
+      _logger.e(e);
+      return false;
+    }
+  }
+
+  Future<bool> lockProfile() async {
+    try {
+      final resp = await _dio.post(
+        '/lockProfile',
       );
       return resp.statusCode == 200;
     } catch (e) {

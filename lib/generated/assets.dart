@@ -32,6 +32,7 @@ class Assets {
   static const String orderOrderState = 'lib/qubit/order/order_state.dart';
   static const String popupsChangePasswordDialog = 'lib/core/popups/change_password_dialog.dart';
   static const String popupsForgotPasswordDialog = 'lib/core/popups/forgot_password_dialog.dart';
+  static const String popupsLockAccountDialog = 'lib/core/popups/lock_account_dialog.dart';
   static const String popupsOrderReviewDialog = 'lib/core/popups/order_review_dialog.dart';
   static const String profilePassengerProfilePage = 'lib/pages/profile/passenger_profile_page.dart';
   static const String profileReceivedReviewList = 'lib/pages/profile/received_review_list.dart';

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -27,7 +28,7 @@ class OrderCubit extends Cubit<OrderState> {
   final _logger = Logger();
   final _noScreenshot = NoScreenshot.instance;
 
-  initState() async {
+  void initState() async {
     emit(OrderLoading());
     final secureStorage = getIt.get<FlutterSecureStorage>();
     final roomId = await secureStorage.read(key: 'roomId');
@@ -43,21 +44,22 @@ class OrderCubit extends Cubit<OrderState> {
         onOrderFinish: _onOrderFinish,
         onPickupPassenger: _onPickupPassenger);
     final orderDataString = await secureStorage.read(key: 'orderData');
+    final passengerPickedUp = await secureStorage.read(key: 'passengerPickedUp');
     final orderData = OfferResponse.fromJson(jsonDecode(orderDataString!));
     final currentRoute = PolylinePoints().decodePolyline(orderData.routes.first.overviewPolyline!.points!);
     final currentPos = await Geolocator.getCurrentPosition();
     emit(
       OrderLoaded(
-        vehicleData: orderData.vehicleData,
-        currentPassengerPos: currentPos,
-        currentRoute: currentRoute,
-        passengerPickedUp: false,
-      ),
+          vehicleData: orderData.vehicleData,
+          currentPassengerPos: currentPos,
+          currentRoute: currentRoute,
+          passengerPickedUp: passengerPickedUp == 'true',
+          price: orderData.price),
     );
     return;
   }
 
-  getOffer(Location destLoc, int personAmount) async {
+  void getOffer(Location destLoc, int personAmount) async {
     try {
       emit(OrderLoading());
       Position currentPos = await Geolocator.getCurrentPosition();
@@ -72,8 +74,10 @@ class OrderCubit extends Cubit<OrderState> {
         emit(OrderWaiting());
         return;
       }
-      var currentRoute = PolylinePoints().decodePolyline(offerResp.routes[0].overviewPolyline!.points!);
+      _logger.d('roomId:${offerResp.socketRoomId}');
+      await getIt.get<FlutterSecureStorage>().write(key: 'passengerPickedUp', value: 'false');
       await getIt.get<FlutterSecureStorage>().write(key: 'roomId', value: offerResp.socketRoomId);
+      var currentRoute = PolylinePoints().decodePolyline(offerResp.routes[0].overviewPolyline!.points!);
       getIt.get<SocketService>().connectToRoom(
           roomId: offerResp.socketRoomId,
           onDriverCancel: _onDriverCancel,
@@ -86,22 +90,26 @@ class OrderCubit extends Cubit<OrderState> {
           currentPassengerPos: currentPos,
           currentRoute: currentRoute,
           passengerPickedUp: false,
+          price: offerResp.price,
         ),
       );
     } catch (e) {
+      cancelRide();
+      emit(OrderWaiting(error: 'Ismeretlen hiba'));
       _logger.e(e);
     }
   }
 
-  cancelRide() async {
+  void cancelRide() async {
     try {
       emit(OrderLoading());
       final secureStorage = getIt.get<FlutterSecureStorage>();
-      await secureStorage.delete(key: 'roomId');
-      await secureStorage.delete(key: 'orderData');
       final socketService = getIt.get<SocketService>();
       await socketService.emitData(SocketDataType.passengerCancel, StreamData(data: ''));
       socketService.disconnectRoom();
+      await secureStorage.delete(key: 'roomId');
+      await secureStorage.delete(key: 'orderData');
+      await secureStorage.delete(key: 'passengerPickedUp');
       await _noScreenshot.screenshotOn();
       emit(OrderWaiting());
     } catch (e) {
@@ -129,6 +137,7 @@ class OrderCubit extends Cubit<OrderState> {
     final secureStorage = getIt.get<FlutterSecureStorage>();
     await secureStorage.delete(key: 'roomId');
     await secureStorage.delete(key: 'orderData');
+    await secureStorage.delete(key: 'passengerPickedUp');
     emit(OrderWaiting(error: 'A sofőr visszautasította'));
   }
 
@@ -138,10 +147,13 @@ class OrderCubit extends Cubit<OrderState> {
     final secureStorage = getIt.get<FlutterSecureStorage>();
     await secureStorage.delete(key: 'roomId');
     await secureStorage.delete(key: 'orderData');
+    await secureStorage.delete(key: 'passengerPickedUp');
     emit(OrderWaiting());
   }
 
   _onPickupPassenger() async {
+    await getIt.get<FlutterSecureStorage>().write(key: 'passengerPickedUp', value: 'true');
+    _logger.d(await getIt.get<FlutterSecureStorage>().read(key: 'passengerPickedUp'));
     emit((state as OrderLoaded).copyWith(passengerPickedUp: true));
   }
 }

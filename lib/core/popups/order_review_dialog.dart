@@ -26,7 +26,7 @@ class _OrderReviewDialogState extends State<OrderReviewDialog> {
         builder: (context, state) {
           return Container(
             width: 550.w,
-            height: 370.h,
+            height: 390.h,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
             decoration: BoxDecoration(
               borderRadius: BorderRadiusStyle.circleBorder15,

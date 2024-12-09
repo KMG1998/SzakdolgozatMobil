@@ -42,7 +42,6 @@ class CustomImageView extends StatelessWidget {
               colorFilter: ColorFilter.mode(color ?? Colors.transparent, BlendMode.srcIn),
             ),
           );
-        case ImageType.png:
         default:
           return Image.asset(
             imagePath!,

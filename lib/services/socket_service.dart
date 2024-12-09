@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
+import 'package:flutter/widgets.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
@@ -12,12 +15,13 @@ import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/stream_data.dart';
 
 class SocketService {
-  final _socket = io(
+  static final _socket = io(
     'http://10.0.2.2:8085',
     OptionBuilder().disableAutoConnect().setTransports(['websocket']).build(),
   );
 
   final StreamController<LatLng> _dataStream = BehaviorSubject();
+  final _backgroundService = FlutterBackgroundService();
 
   final List<String> listenerNames = [
     SocketDataType.driverGeoData.name,
@@ -29,6 +33,19 @@ class SocketService {
 
   SocketService() {
     _logger.d('create stream service');
+    _backgroundService.configure(
+        iosConfiguration: IosConfiguration(
+          autoStart: false,
+          onForeground: onStart,
+          onBackground: onIosBackground,
+        ),
+        androidConfiguration: AndroidConfiguration(
+          autoStart: false,
+          onStart: onStart,
+          isForegroundMode: true,
+          autoStartOnBoot: false,
+        ));
+    _logger.d('BS configured');
     _socket.onConnect((e) => _logger.d('websocket connect ok'));
     _socket.onError((e) {
       _logger.e('error: $e');
@@ -36,8 +53,15 @@ class SocketService {
         _socket.connect();
       }
     });
-    _socket.onDisconnect((e) => _logger.d('disconnect for $e'));
-    _socket.onclose((e) => _logger.d('closed for $e'));
+    _socket.onDisconnect((e) {
+      _logger.d('disconnect for $e');
+    });
+    _socket.onclose((e) {
+      _logger.d('closed for $e');
+      getIt.get<FlutterSecureStorage>().delete(key: 'roomId');
+      getIt.get<FlutterSecureStorage>().delete(key: 'orderData');
+      getIt.get<FlutterSecureStorage>().delete(key: 'passengerPickedUp');
+    });
     _socket.connect();
   }
 
@@ -64,6 +88,7 @@ class SocketService {
       onPickupPassenger();
     });
     _socket.on(SocketDataType.driverCancel.name, (data) {
+      _logger.e('received driver cancel');
       onDriverCancel();
       _socket.emit(SocketDataType.leaveRoom.name, roomId);
       disconnectRoom();
@@ -94,5 +119,31 @@ class SocketService {
     } catch (e) {
       _logger.e('disconnect error $e');
     }
+  }
+
+  void startBackgroundService() async {
+    await _backgroundService.startService();
+  }
+
+  void stopBackgroundService() {
+    _backgroundService.invoke('stop');
+  }
+
+  @pragma('vm:entry-point')
+  static void onStart(ServiceInstance service) {
+    DartPluginRegistrant.ensureInitialized;
+    WidgetsFlutterBinding.ensureInitialized();
+    initServiceLocator();
+    service.on('stop').listen((event) {
+      service.stopSelf();
+    });
+    _socket.connect();
+  }
+
+  @pragma('vm:entry-point')
+  Future<bool> onIosBackground(ServiceInstance service) async {
+    WidgetsFlutterBinding.ensureInitialized();
+    DartPluginRegistrant.ensureInitialized();
+    return true;
   }
 }

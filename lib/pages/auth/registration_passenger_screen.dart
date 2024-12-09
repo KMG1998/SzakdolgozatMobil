@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
+import 'package:szakdolgozat_magantaxi_mobil/models/user.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';
@@ -16,21 +21,20 @@ class RegistrationPassengerScreen extends StatefulWidget {
 }
 
 class _RegistrationPassengerScreenState extends State<RegistrationPassengerScreen> {
-  TextEditingController emailInputController = TextEditingController();
+  final TextEditingController emailInputController = TextEditingController();
 
-  TextEditingController nameInputController = TextEditingController();
+  final TextEditingController nameInputController = TextEditingController();
 
-  TextEditingController passwordInputController = TextEditingController();
+  final TextEditingController passwordInputController = TextEditingController();
 
-  TextEditingController passwordAgainInputController = TextEditingController();
+  final TextEditingController passwordAgainInputController = TextEditingController();
 
-  static UserService userService = UserService();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        
         extendBody: true,
         extendBodyBehindAppBar: true,
         resizeToAvoidBottomInset: false,
@@ -56,39 +60,42 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
                 Expanded(
                   child: SingleChildScrollView(
                     child: Padding(
-                      padding: EdgeInsets.only(bottom: 339.w),
-                      child: Column(
-                        children: [
-                          Text(
-                            "E-mail",
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          SizedBox(height: 7.w),
-                          _buildEmailInput(context),
-                          SizedBox(height: 31.w),
-                          Text(
-                            "Név",
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          SizedBox(height: 7.w),
-                          _buildNameInput(context),
-                          SizedBox(height: 31.w),
-                          Text(
-                            "Jelszó",
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          SizedBox(height: 7.w),
-                          _buildPasswordInput(context),
-                          SizedBox(height: 34.w),
-                          Text(
-                            "Jelszó ellenőrzés",
-                            style: theme.textTheme.bodyMedium,
-                          ),
-                          SizedBox(height: 4.w),
-                          _buildPasswordAgainInput(context),
-                          SizedBox(height: 77.w),
-                          _buildRegistrationButton(context),
-                        ],
+                      padding: EdgeInsets.only(bottom: 339.h),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          children: [
+                            Text(
+                              "E-mail",
+                              style: theme.textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 7.w),
+                            _buildEmailInput(context),
+                            SizedBox(height: 31.w),
+                            Text(
+                              "Név",
+                              style: theme.textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 7.w),
+                            _buildNameInput(context),
+                            SizedBox(height: 31.w),
+                            Text(
+                              "Jelszó",
+                              style: theme.textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 7.w),
+                            _buildPasswordInput(context),
+                            SizedBox(height: 34.w),
+                            Text(
+                              "Jelszó ismét",
+                              style: theme.textTheme.titleLarge,
+                            ),
+                            SizedBox(height: 4.w),
+                            _buildPasswordAgainInput(context),
+                            SizedBox(height: 77.w),
+                            _buildRegistrationButton(context),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -101,7 +108,11 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
     );
   }
 
-  /// Section Widget
+  @override
+  dispose(){
+    super.dispose();
+  }
+
   Widget _buildEmailInput(BuildContext context) {
     return CustomTextFormField(
       width: 351.h,
@@ -109,7 +120,6 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
     );
   }
 
-  /// Section Widget
   Widget _buildNameInput(BuildContext context) {
     return CustomTextFormField(
       width: 351.h,
@@ -117,41 +127,48 @@ class _RegistrationPassengerScreenState extends State<RegistrationPassengerScree
     );
   }
 
-  /// Section Widget
   Widget _buildPasswordInput(BuildContext context) {
     return CustomTextFormField(
       width: 351.h,
       controller: passwordInputController,
+      validator: (password) => Validators.passwordValidator(password),
+      obscureText: true,
     );
   }
 
-  /// Section Widget
   Widget _buildPasswordAgainInput(BuildContext context) {
     return CustomTextFormField(
-      width: 351.h,
-      controller: passwordAgainInputController,
-      textInputAction: TextInputAction.done,
-    );
+        width: 351.h,
+        controller: passwordAgainInputController,
+        textInputAction: TextInputAction.done,
+        obscureText: true,
+        validator: (passwordAgain) => Validators.passwordAgainValidator(passwordInputController.text, passwordAgain));
   }
 
-  /// Section Widget
   Widget _buildRegistrationButton(BuildContext context) {
     return CustomOutlinedButton(
       height: 40.h,
       width: 311.w,
       text: "Regisztráció",
       buttonStyle: CustomButtonStyles.outlineBlack,
-      buttonTextStyle: theme.textTheme.bodyMedium!,
+      buttonTextStyle: theme.textTheme.bodyLarge,
       onPressed: () async {
-        userService
-            .createPassenger(emailInputController.text, passwordInputController.text, nameInputController.text)
-            .then((newUser) {
-          debugPrint('success:$newUser');
-          if (true) {
-            navigatorKey.currentState?.pushNamed(AppRoutes.loginScreen);
-            return;
-          }
-        });
+        if (_formKey.currentState!.validate()) {
+          getIt
+              .get<UserService>()
+              .createPassenger(
+                emailInputController.text,
+                passwordInputController.text,
+                nameInputController.text,
+              )
+              .then((success) {
+            if (success) {
+              navigatorKey.currentState?.pushReplacementNamed(AppRoutes.loginScreen);
+              return;
+            }
+            ToastWrapper.showErrorToast(message: 'Sikertelen regisztráció');
+          });
+        }
       },
     );
   }

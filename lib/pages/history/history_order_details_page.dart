@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/date_formatter.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/numeric_constant_converter.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_cubit.dart';
@@ -18,9 +19,11 @@ class HistoryOrderDetails extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           extendBody: true,
+          extendBodyBehindAppBar: true,
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.transparent,
             title: SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Stack(
@@ -47,7 +50,7 @@ class HistoryOrderDetails extends StatelessWidget {
           body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: EdgeInsets.symmetric(vertical: 50.h, horizontal: 10),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: const Alignment(0.5, 0),
@@ -67,8 +70,8 @@ class HistoryOrderDetails extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       _createItem('Azonosító: ${selectedOrder.id}'),
-                      _createItem('Indulási pozíció: ${selectedOrder.startAddress}'),
-                      _createItem('Úticél pozíció: ${selectedOrder.destinationAddress}'),
+                      _createItem('Indulási cím: ${selectedOrder.startAddress}'),
+                      _createItem('Úticél cím: ${selectedOrder.destinationAddress}'),
                       _createItem('Létrehozás időpontja: ${DateFormatter.formatTimestamp(selectedOrder.startDateTime)}'),
                       _createItem('Lezárás időpontja: ${DateFormatter.formatTimestamp(selectedOrder.finishDateTime)}'),
                       _createItem(

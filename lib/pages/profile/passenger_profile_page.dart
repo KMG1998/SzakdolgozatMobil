@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/popups/change_password_dialog.dart';
+import 'package:szakdolgozat_magantaxi_mobil/core/popups/lock_account_dialog.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/generated/assets.gen.dart';
@@ -106,9 +107,7 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
                           text: 'jelszó megváltoztatása',
                           onPressed: () async {
                             await showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (ctx) => ChangePasswordDialog());
+                                context: context, barrierDismissible: false, builder: (ctx) => ChangePasswordDialog());
                           }),
                       _createButton(
                           text: 'értékelések megtekintése',
@@ -116,31 +115,30 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
                             Navigator.pushNamed(context, AppRoutes.receivedReviews);
                           }),
                       SizedBox(height: 50),
-                      Container(
-                        padding: EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(40),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.4),
-                              spreadRadius: 5,
-                              blurRadius: 7,
-                            ),
-                          ],
-                        ),
-                        child: IconButton(
-                          onPressed: () {
-                            context.read<AuthCubit>().logOut();
-                          },
-                          icon: Assets.lib.assets.images.logOut.svg(),
-                        ),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          _iconButton(
+                              text: 'Profil zárolás',
+                              icon: Icon(Icons.lock),
+                              backgroundColor: Colors.redAccent,
+                              onPressed: () async {
+                                await showDialog(
+                                  context: context,
+                                  barrierDismissible: false,
+                                  builder: (ctx) => LockAccountDialog(),
+                                );
+                              }),
+                          _iconButton(
+                              text: 'Kijelentkezés',
+                              icon: Assets.lib.assets.images.logOut.svg(),
+                              backgroundColor: Colors.white,
+                              onPressed: () {
+                                context.read<AuthCubit>().logOut();
+                              })
+                        ],
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        'Kijelentkezés',
-                        style: theme.textTheme.titleLarge,
-                      )
                     ],
                   );
                 }
@@ -284,4 +282,40 @@ class _PassengerProfilePageState extends State<PassengerProfilePage> {
       onPressed: onPressed,
     );
   }
+
+  Widget _iconButton({
+    required String text,
+    required Widget icon,
+    required Color backgroundColor,
+    required void Function() onPressed,
+  }) =>
+      Column(
+        children: [
+          Container(
+            width: 150.w,
+            height: 75.h,
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: BorderRadius.circular(40),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.4),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: onPressed,
+              icon: icon,
+            ),
+          ),
+          SizedBox(height: 10),
+          Text(
+            text,
+            style: theme.textTheme.titleLarge,
+          )
+        ],
+      );
 }
