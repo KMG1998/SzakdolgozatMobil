@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/validators.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
-import 'package:szakdolgozat_magantaxi_mobil/models/user.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 import 'package:szakdolgozat_magantaxi_mobil/services/user_service.dart';
 import 'package:szakdolgozat_magantaxi_mobil/theme/custom_button_style.dart';

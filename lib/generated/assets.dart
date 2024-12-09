@@ -46,7 +46,6 @@ class Assets {
   static const String splashSplashScreen = 'lib/pages/splash/splash_screen.dart';
   static const String themeAppDecoration = 'lib/theme/app_decoration.dart';
   static const String themeCustomButtonStyle = 'lib/theme/custom_button_style.dart';
-  static const String themeCustomTextStyle = 'lib/theme/custom_text_style.dart';
   static const String themeThemeHelper = 'lib/theme/theme_helper.dart';
   static const String userUserCubit = 'lib/qubit/user/user_cubit.dart';
   static const String userUserState = 'lib/qubit/user/user_state.dart';

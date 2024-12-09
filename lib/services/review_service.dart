@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
+import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/order_review.dart';
+import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
 
 class ReviewService{
   final _dio = Dio(BaseOptions(
@@ -19,14 +20,19 @@ class ReviewService{
     },
   ));
 
-
-  final _logger = Logger();
-
   ReviewService() {
     _dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options, RequestInterceptorHandler handler) async {
       options.headers['cookie'] = 'token=${await getIt.get<FlutterSecureStorage>().read(key:'token')};';
       handler.next(options);
+    }));
+    _dio.interceptors
+        .add(InterceptorsWrapper(onResponse: (Response response, ResponseInterceptorHandler handler) {
+      if (response.statusCode == 401) {
+        navigatorKey.currentState?.pushReplacementNamed(AppRoutes.loginScreen);
+        return;
+      }
+      handler.next(response);
     }));
   }
 

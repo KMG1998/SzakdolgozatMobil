@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:logger/logger.dart';
 import 'package:meta/meta.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';

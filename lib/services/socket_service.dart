@@ -7,7 +7,6 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:logger/logger.dart';
-import 'package:no_screenshot/no_screenshot.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
