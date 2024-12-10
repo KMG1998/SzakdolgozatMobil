@@ -19,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
 
-  final formKey = GlobalKey<FormState>();
+
 
   final logger = Logger();
 
@@ -28,9 +28,6 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   void login() async {
-    if (!formKey.currentState!.validate()) {
-      return;
-    }
     emit(AuthInProgress());
     try {
       bool success = await getIt.get<UserService>().logUserIn(emailInputController.text, passwordInputController.text);

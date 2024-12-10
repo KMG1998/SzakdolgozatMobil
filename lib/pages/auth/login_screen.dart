@@ -22,6 +22,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -54,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Padding(
                       padding: EdgeInsets.only(bottom: 164.h),
                       child: Form(
-                        key: context.read<AuthCubit>().formKey,
+                        key: formKey,
                         child: Column(
                           children: [
                             CustomImageView(
@@ -159,6 +161,9 @@ class _LoginScreenState extends State<LoginScreen> {
             buttonStyle: CustomButtonStyles.outlineBlack,
             buttonTextStyle: theme.textTheme.bodyLarge!,
             onPressed: () {
+              if (!formKey.currentState!.validate()) {
+                return;
+              }
               context.read<AuthCubit>().login();
             },
           );
