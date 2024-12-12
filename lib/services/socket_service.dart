@@ -6,7 +6,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:logger/logger.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
@@ -28,10 +27,7 @@ class SocketService {
     SocketDataType.finishOrder.name,
   ];
 
-  final _logger = Logger();
-
   SocketService() {
-    _logger.d('create stream service');
     _backgroundService.configure(
         iosConfiguration: IosConfiguration(
           autoStart: false,
@@ -44,19 +40,13 @@ class SocketService {
           isForegroundMode: true,
           autoStartOnBoot: false,
         ));
-    _logger.d('BS configured');
-    _socket.onConnect((e) => _logger.d('websocket connect ok'));
     _socket.onError((e) {
-      _logger.e('error: $e');
       if (!_socket.connected) {
         _socket.connect();
       }
     });
-    _socket.onDisconnect((e) {
-      _logger.d('disconnect for $e');
-    });
+    _socket.onDisconnect((e) {});
     _socket.onclose((e) {
-      _logger.d('closed for $e');
       getIt.get<FlutterSecureStorage>().delete(key: 'roomId');
       getIt.get<FlutterSecureStorage>().delete(key: 'orderData');
       getIt.get<FlutterSecureStorage>().delete(key: 'passengerPickedUp');
@@ -72,11 +62,7 @@ class SocketService {
   }) {
     _socket.emit(SocketDataType.joinRoom.name, roomId);
     _socket.on(SocketDataType.driverGeoData.name, (data) async {
-      try {
-        _dataStream.add(LatLng(data[0], data[1]));
-      } catch (e) {
-        _logger.e(e);
-      }
+      _dataStream.add(LatLng(data[0], data[1]));
     });
     _socket.on(SocketDataType.finishOrder.name, (data) {
       onOrderFinish();
@@ -87,7 +73,6 @@ class SocketService {
       onPickupPassenger();
     });
     _socket.on(SocketDataType.driverCancel.name, (data) {
-      _logger.e('received driver cancel');
       onDriverCancel();
       _socket.emit(SocketDataType.leaveRoom.name, roomId);
       disconnectRoom();
@@ -110,14 +95,10 @@ class SocketService {
   }
 
   void disconnectRoom() {
-    try {
-      for (String listenerName in listenerNames) {
-        _socket.off(listenerName);
-      }
-      getIt.get<FlutterSecureStorage>().delete(key: 'roomId');
-    } catch (e) {
-      _logger.e('disconnect error $e');
+    for (String listenerName in listenerNames) {
+      _socket.off(listenerName);
     }
+    getIt.get<FlutterSecureStorage>().delete(key: 'roomId');
   }
 
   void startBackgroundService() async {

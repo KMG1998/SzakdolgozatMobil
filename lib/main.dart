@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:szakdolgozat_magantaxi_mobil/pages/splash/splash_screen.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/auth/auth_cubit.dart';
 import 'package:szakdolgozat_magantaxi_mobil/qubit/history/history_cubit.dart';
@@ -49,11 +48,6 @@ class MyApp extends StatelessWidget {
               home: const SplashScreen(),
               routes: AppRoutes.routes,
               navigatorKey: navigatorKey,
-              localizationsDelegates: [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
               supportedLocales: [
                 Locale('hu'),
               ]),

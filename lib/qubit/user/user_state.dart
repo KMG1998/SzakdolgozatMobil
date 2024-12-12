@@ -1,6 +1,5 @@
 part of 'user_cubit.dart';
 
-@immutable
 class UserState {
   const UserState._();
 }

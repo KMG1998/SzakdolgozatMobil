@@ -1,8 +1,7 @@
-import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/toast_wrapper.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
@@ -19,10 +18,6 @@ class AuthCubit extends Cubit<AuthState> {
   FocusNode emailFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
 
-
-
-  final logger = Logger();
-
   reset() {
     emit(AuthInit());
   }
@@ -37,7 +32,6 @@ class AuthCubit extends Cubit<AuthState> {
         emit(AuthSuccess());
       }
     } catch (e) {
-      logger.e(e);
       emit(AuthFail(e));
     }
   }

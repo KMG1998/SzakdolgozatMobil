@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/user.dart';
 import 'package:szakdolgozat_magantaxi_mobil/routes/app_routes.dart';
@@ -20,8 +19,6 @@ class UserService {
     },
     responseType: ResponseType.json,
   ));
-
-  final _logger = Logger();
 
   UserService() {
     _dio.interceptors
@@ -101,7 +98,6 @@ class UserService {
       );
       return resp.statusCode == 200;
     } catch (e) {
-      _logger.e(e);
       return false;
     }
   }
@@ -117,7 +113,6 @@ class UserService {
       );
       return resp.statusCode == 200;
     } catch (e) {
-      _logger.e(e);
       return false;
     }
   }
@@ -132,7 +127,6 @@ class UserService {
       );
       return resp.statusCode == 200;
     } catch (e) {
-      _logger.e(e);
       return false;
     }
   }
@@ -144,7 +138,6 @@ class UserService {
       );
       return resp.statusCode == 200;
     } catch (e) {
-      _logger.e(e);
       return false;
     }
   }

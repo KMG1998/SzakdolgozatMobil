@@ -1,13 +1,10 @@
 import 'dart:convert';
 
-import 'package:bloc/bloc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:map_location_picker/map_location_picker.dart';
-import 'package:no_screenshot/no_screenshot.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/enums.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/popups/order_review_dialog.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
@@ -25,14 +22,11 @@ part 'order_state.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   OrderCubit() : super(OrderInit());
-  final _logger = Logger();
-  final _noScreenshot = NoScreenshot.instance;
 
   void initState() async {
     emit(OrderLoading());
     final secureStorage = getIt.get<FlutterSecureStorage>();
     final roomId = await secureStorage.read(key: 'roomId');
-    _logger.d(roomId);
     if (roomId == null) {
       emit(OrderWaiting());
       return;
@@ -74,7 +68,6 @@ class OrderCubit extends Cubit<OrderState> {
         emit(OrderWaiting());
         return;
       }
-      _logger.d('roomId:${offerResp.socketRoomId}');
       await getIt.get<FlutterSecureStorage>().write(key: 'passengerPickedUp', value: 'false');
       await getIt.get<FlutterSecureStorage>().write(key: 'roomId', value: offerResp.socketRoomId);
       var currentRoute = PolylinePoints().decodePolyline(offerResp.routes[0].overviewPolyline!.points!);
@@ -83,7 +76,6 @@ class OrderCubit extends Cubit<OrderState> {
           onDriverCancel: _onDriverCancel,
           onOrderFinish: _onOrderFinish,
           onPickupPassenger: _onPickupPassenger);
-      await _noScreenshot.screenshotOff();
       emit(
         OrderLoaded(
           vehicleData: offerResp.vehicleData,
@@ -96,7 +88,6 @@ class OrderCubit extends Cubit<OrderState> {
     } catch (e) {
       cancelRide();
       emit(OrderWaiting(error: 'Ismeretlen hiba'));
-      _logger.e(e);
     }
   }
 
@@ -110,11 +101,8 @@ class OrderCubit extends Cubit<OrderState> {
       await secureStorage.delete(key: 'roomId');
       await secureStorage.delete(key: 'orderData');
       await secureStorage.delete(key: 'passengerPickedUp');
-      await _noScreenshot.screenshotOn();
       emit(OrderWaiting());
     } catch (e) {
-      _logger.e(e);
-      await _noScreenshot.screenshotOn();
       emit(OrderWaiting());
     }
   }
@@ -133,7 +121,6 @@ class OrderCubit extends Cubit<OrderState> {
   }
 
   _onDriverCancel() async {
-    await _noScreenshot.screenshotOn();
     final secureStorage = getIt.get<FlutterSecureStorage>();
     await secureStorage.delete(key: 'roomId');
     await secureStorage.delete(key: 'orderData');
@@ -143,7 +130,6 @@ class OrderCubit extends Cubit<OrderState> {
 
   _onOrderFinish() async {
     await _createReview();
-    await _noScreenshot.screenshotOn();
     final secureStorage = getIt.get<FlutterSecureStorage>();
     await secureStorage.delete(key: 'roomId');
     await secureStorage.delete(key: 'orderData');
@@ -153,7 +139,6 @@ class OrderCubit extends Cubit<OrderState> {
 
   _onPickupPassenger() async {
     await getIt.get<FlutterSecureStorage>().write(key: 'passengerPickedUp', value: 'true');
-    _logger.d(await getIt.get<FlutterSecureStorage>().read(key: 'passengerPickedUp'));
     emit((state as OrderLoaded).copyWith(passengerPickedUp: true));
   }
 }

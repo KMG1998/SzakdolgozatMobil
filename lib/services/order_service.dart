@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:logger/logger.dart';
 import 'package:szakdolgozat_magantaxi_mobil/core/utils/service_locator.dart';
 import 'package:szakdolgozat_magantaxi_mobil/main.dart';
 import 'package:szakdolgozat_magantaxi_mobil/models/order.dart';
@@ -22,8 +21,6 @@ class OrderService {
     },
     responseType: ResponseType.json,
   ));
-
-  final _logger = Logger();
 
   OrderService() {
     _dio.interceptors
@@ -64,7 +61,6 @@ class OrderService {
       await getIt.get<FlutterSecureStorage>().write(key: 'orderData', value: resp.data);
       return resp.data!.isNotEmpty ? OfferResponse.fromJson(jsonDecode(resp.data!)) : null;
     } catch (e) {
-      _logger.e(e);
       return null;
     }
   }
