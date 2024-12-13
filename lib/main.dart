@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(675, 948),
-      builder: (_,child) {
+      builder: (_, child) {
         return MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => AuthCubit()),
@@ -43,14 +43,12 @@ class MyApp extends StatelessWidget {
             BlocProvider(create: (context) => ReviewListCubit()),
           ],
           child: MaterialApp(
-              theme: theme,
-              debugShowCheckedModeBanner: false,
-              home: const SplashScreen(),
-              routes: AppRoutes.routes,
-              navigatorKey: navigatorKey,
-              supportedLocales: [
-                Locale('hu'),
-              ]),
+            theme: theme,
+            debugShowCheckedModeBanner: false,
+            home: const SplashScreen(),
+            routes: AppRoutes.routes,
+            navigatorKey: navigatorKey,
+          ),
         );
       },
     );
