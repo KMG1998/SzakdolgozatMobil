@@ -8,4 +8,5 @@ Kiss Máté Gergő szakdolgozat mobil oldal
 - Java 17
 
 ## Futtatás
+- flutter pub get parancs kiadása konzolban
 - android studioban start gomb
